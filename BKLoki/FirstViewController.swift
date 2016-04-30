@@ -146,17 +146,21 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(defaults.objectForKey("UUID") == nil){
-            defaults.setObject([UUID], forKey: "UUID")
-        }else{
-            var arr = defaults.arrayForKey("UUID")
-            arr?.append(UUID)
-            print("array: \(arr)")
-            defaults.setObject(arr, forKey: "UUID")
-        }
-        
+        if (indexPath.row != discoveries.count) {
+            let remoteDeviceName = discoveries[indexPath.row].localName!
+            
+            if(defaults.objectForKey("devicename") == nil){
+                defaults.setObject([remoteDeviceName], forKey: "devicename")
+            }else{
+                var arr = defaults.arrayForKey("devicename")
+                arr?.append(remoteDeviceName)
+                print("array: \(arr)")
+                defaults.setObject(arr, forKey: "devicename")
+            }
+            
 
-        self.performSegueWithIdentifier("add", sender: self)
+            self.performSegueWithIdentifier("add", sender: self)
+        }
     }
     
     override func didReceiveMemoryWarning() {

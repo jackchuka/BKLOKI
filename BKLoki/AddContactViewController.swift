@@ -33,8 +33,8 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         if(defaults.objectForKey("correspondingNames") == nil){
             defaults.setObject([newname], forKey: "correspondingNames")
         }else{
-            let arr = defaults.objectForKey("correspondingNames")
-            arr?.appendString(newname)
+            var arr = defaults.arrayForKey("correspondingNames")
+            arr?.append(newname)
             defaults.setObject(arr, forKey: "correspondingNames")
         }
         
