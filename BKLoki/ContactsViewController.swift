@@ -23,9 +23,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
         self.tableView.registerNib(UINib(nibName: "ContactCell", bundle: nil), forCellReuseIdentifier: "cell")
         if(defaults.objectForKey("namearray") == nil){
             users = ["Charlotte", "Billy", "Charlie", "Sammy"]
-            images = ["", "", "", ""]
             defaults.setObject(users, forKey: "namearray")
+        }
+        if(defaults.objectForKey("imagearray") == nil){
+            images = ["blah", "blah", "blah", "blah"]
             defaults.setObject(images, forKey: "imagearray")
+
         }
         users = defaults.objectForKey("namearray") as! [String]
         images = defaults.objectForKey("imagearray") as! [String]
@@ -51,6 +54,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
         // Configure the cell...
         
         cell.name.text = users[indexPath.row]
+        print(users.count)
+        print(images.count)
         cell.imageofcell.image = UIImage(named: images[indexPath.row])
         
         return cell
