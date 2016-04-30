@@ -16,6 +16,8 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     private let peripheral = BKPeripheral()
     private var discoveries = [BKDiscovery]()
     
+    private let discoveriesTableView = UITableView()
+    
     let defaults = NSUserDefaults.standardUserDefaults()
     let serviceUUID = NSUUID(UUIDString: "470275F0-EF0A-4A20-9CEF-D160A4C25BF9")!
     let characteristicUUID = NSUUID(UUIDString: "E9CF5BAD-8D47-4C2E-A3D6-620115807AAD")!
@@ -48,7 +50,15 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             for device in discoveries {
                 print(device.localName)
             }
+            let indexPathsToRemove = changes.filter({ $0 == .Remove(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
             self.discoveries = discoveries
+            let indexPathsToInsert = changes.filter({ $0 == .Insert(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
+            if !indexPathsToRemove.isEmpty {
+                self.discoveriesTableView.deleteRowsAtIndexPaths(indexPathsToRemove, withRowAnimation: UITableViewRowAnimation.Automatic)
+            }
+            if !indexPathsToInsert.isEmpty {
+                self.discoveriesTableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
+            }
             }, stateHandler: { newState in
                 if newState == .Scanning {
                     print("scanning")
