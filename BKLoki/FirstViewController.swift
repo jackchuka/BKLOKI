@@ -15,7 +15,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     private let central = BKCentral()
     private let peripheral = BKPeripheral()
     private var discoveries = [BKDiscovery]()
-    
+    private var localName = String!()
     
     @IBOutlet weak var tableView: UITableView!
     let defaults = NSUserDefaults.standardUserDefaults()
@@ -96,12 +96,12 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             peripheral.delegate = self
             
             
-            let localName = UIDevice.currentDevice().name
+             localName = UIDevice.currentDevice().name
 
 //            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
 //            arrayofUUID.append(localName!)
 //            defaults.setObject(arrayofUUID, forKey: "arrayofUUID")
-            //
+            
             
             
             let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID:  characteristicUUID, localName: localName)
@@ -138,12 +138,10 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
-        
-        if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
+        if(defaults.objectForKey("UUID") == nil){
+            defaults.setObject([localName], forKey: "UUID")
         }
-        cell.accessoryType = .Checkmark
+        self.performSegueWithIdentifier("add", sender: self)
     }
     
     @IBAction func btnSendPressed(sender: AnyObject) {

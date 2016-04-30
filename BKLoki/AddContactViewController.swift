@@ -28,7 +28,29 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     }
     func textFieldDidEndEditing(textField: UITextField) {
         newname = textField.text
+        
+        //friend or enemy
         friend = friendorenemy.text
+        if(friend.lowercaseString == "friend"){
+            if defaults.objectForKey("friend") != nil{
+                var booleanarray = defaults.objectForKey("friend") as! [String]
+                booleanarray.append(newname)
+                defaults.setObject(booleanarray, forKey: "friend")
+            }else{
+                defaults.setObject([newname], forKey: "friend")
+            }
+        }else{
+            if(defaults.objectForKey("enemy") != nil){
+                var booleanarray = defaults.objectForKey("enemy") as! [String]
+                booleanarray.append(newname)
+                defaults.setObject(booleanarray, forKey: "enemy")
+            }
+            else{
+                defaults.setObject([newname], forKey: "enemy")
+            }
+        }
+        
+        
         var namearray = defaults.objectForKey("namearray") as! [String]
         namearray.append(newname)
         var imagearray = defaults.objectForKey("imagearray") as! [String]

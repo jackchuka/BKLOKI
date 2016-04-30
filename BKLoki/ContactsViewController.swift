@@ -15,6 +15,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     private let central = BKCentral()
     var users = [String]()
     var images = [String]()
+    var friends = [String]()
+    var enemies = [String]()
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +32,21 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
             defaults.setObject(images, forKey: "imagearray")
 
         }
+        if(defaults.objectForKey("enemy") == nil){
+            enemies = ["Charlotte", "Charlie"]
+            defaults.setObject(enemies, forKey: "enemy")
+            
+        }
+        if(defaults.objectForKey("friend") == nil){
+            friends = ["Billy", "Sammy"]
+            defaults.setObject(friends, forKey: "friend")
+            
+        }
         users = defaults.objectForKey("namearray") as! [String]
         images = defaults.objectForKey("imagearray") as! [String]
+        enemies = defaults.objectForKey("enemy") as! [String]
+        friends = defaults.objectForKey("friend") as! [String]
+        self.tableView.reloadData()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -40,24 +55,34 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return users.count
+        if(section == 0){
+            return friends.count
+        }else{
+            return enemies.count
+        }
     }
     
+    func tableView( tableView : UITableView,  titleForHeaderInSection section: Int)->String {
+        switch(section) {
+        case 1:return "Enemies"
+        default :return "Friends"
+        }
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell : ContactCell = tableView.dequeueReusableCellWithIdentifier("cell") as! ContactCell
         // Configure the cell...
         
-        cell.name.text = users[indexPath.row]
-        print(users.count)
-        print(images.count)
-        cell.imageofcell.image = UIImage(named: images[indexPath.row])
-        
+        if(indexPath.section == 0){
+            cell.name.text = friends[indexPath.row]
+        }else{
+            cell.name.text = enemies[indexPath.row]
+        }
         return cell
 
         
