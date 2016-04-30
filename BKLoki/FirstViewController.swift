@@ -15,7 +15,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     private let central = BKCentral()
     private let peripheral = BKPeripheral()
     private var discoveries = [BKDiscovery]()
-    private var localName = String!()
+    private var localName = String()
     
     @IBOutlet weak var tableView: UITableView!
     let defaults = NSUserDefaults.standardUserDefaults()
@@ -97,7 +97,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             peripheral.delegate = self
             
             
-             localName = UIDevice.currentDevice().name
+             localName = (UIDevice.currentDevice().identifierForVendor?.UUIDString)!
 
 //            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
 //            arrayofUUID.append(localName!)
