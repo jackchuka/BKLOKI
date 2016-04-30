@@ -130,7 +130,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
         
         if (indexPath.row == discoveries.count) {
-            cell.textLabel?.text = "MY UUID: \(UIDevice.currentDevice().identifierForVendor?.UUIDString)"
+            cell.textLabel?.text = "MY UUID: \((UIDevice.currentDevice().identifierForVendor?.UUIDString)!)"
             cell.accessoryType = .None
             return cell
         }
@@ -140,21 +140,15 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.textLabel?.text = discovery.localName != nil ? discovery.localName : discovery.remotePeripheral.name
         cell.accessoryType = .None
         
-        
-        
         return cell
         
     }
+    
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(defaults.objectForKey("UUID") == nil){
             defaults.setObject([localName], forKey: "UUID")
         }
         self.performSegueWithIdentifier("add", sender: self)
-    }
-    
-    @IBAction func btnSendPressed(sender: AnyObject) {
-        let data = "Hello beloved central!".dataUsingEncoding(NSUTF8StringEncoding)
-        print("discovered devices: \(discoveries.count)")
     }
     
     override func didReceiveMemoryWarning() {
