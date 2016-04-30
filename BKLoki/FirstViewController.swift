@@ -20,7 +20,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     let defaults = NSUserDefaults.standardUserDefaults()
     let serviceUUID = NSUUID(UUIDString: "470275F0-EF0A-4A20-9CEF-D160A4C25BF9")!
-    let characteristicUUID = NSUUID(UUIDString: "E9CF5BAD-8D47-4C2E-A3D6-620115807AAD")!
+    let characteristicUUID = NSUUID(UUIDString: (UIDevice.currentDevice().identifierForVendor?.UUIDString)!)!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +55,9 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
             if !indexPathsToInsert.isEmpty {
                 self.tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
+            }
+            for device in discoveries {
+                print("\(device.localName): \(device.remotePeripheral.identifier.UUIDString)")
             }
             }, stateHandler: { newState in
                 if newState == .Scanning {
@@ -92,7 +95,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             peripheral.delegate = self
             
             
-            let localName = UIDevice.currentDevice().identifierForVendor?.UUIDString
+            let localName = UIDevice.currentDevice().name
 
 //            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
 //            arrayofUUID.append(localName!)
