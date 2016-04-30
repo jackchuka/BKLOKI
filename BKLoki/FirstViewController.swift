@@ -8,8 +8,9 @@
 
 import UIKit
 import BluetoothKit
+import CoreBluetooth
 
-class FirstViewController: UIViewController {
+class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDelegate {
     
     private let peripheral = BKPeripheral()
     private let central = BKCentral()
@@ -26,24 +27,41 @@ class FirstViewController: UIViewController {
         
     }
     
+    internal override func viewDidAppear(animated: Bool) {
+        scan()
+    }
+    
+    func scan() {
+        
+        central.scanContinuouslyWithChangeHandler({ changes, discoveries in
+            // Handle changes to "availabile" discoveries, [BKDiscoveriesChange].
+            // Handle current "available" discoveries, [BKDiscovery].
+            // This is where you'd ie. update a table view.
+            for device in discoveries {
+                print(device.localName)
+            }
+            }, stateHandler: { newState in
+                if newState == .Scanning {
+                    print("scanning")
+                    return
+                } else if newState == .Stopped {
+                    print("stopped")
+                }
+            }, duration: 3, inBetweenDelay: 3, errorHandler: { error in
+                // Handle error.
+                print(error)
+        })
+
+    }
+    
     func initCentral() {
         do {
+            central.delegate = self
             let configuration = BKConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID: characteristicUUID)
             try central.startWithConfiguration(configuration)
             // You are now ready to discover and connect to peripherals.
             
             print("test")
-            
-            central.scanWithDuration(3, progressHandler: { newDiscoveries in
-                // Handle newDiscoveries, [BKDiscovery].
-                for device in newDiscoveries {
-                    print(device.localName)
-                }
-                }, completionHandler: { result, error in
-                    print(error.debugDescription)
-                    // Handle error.
-                    // If no error, handle result, [BKDiscovery].
-            })
             
         } catch let error {
             // Handle error.
@@ -53,6 +71,7 @@ class FirstViewController: UIViewController {
     
     func initPeripheral() {
         do {
+            peripheral.delegate = self
             let localName = "My Cool Peripheral"
             let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID:  characteristicUUID, localName: localName)
             try peripheral.startWithConfiguration(configuration)
@@ -73,7 +92,24 @@ class FirstViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
+    internal func central(central: BKCentral, remotePeripheralDidDisconnect remotePeripheral: BKRemotePeripheral) {
+        print("Remote peripheral did disconnect: \(remotePeripheral)")
+        self.navigationController?.popToViewController(self, animated: true)
+    }
 
+    
+    
+    internal func peripheral(peripheral: BKPeripheral, remoteCentralDidConnect remoteCentral: BKRemoteCentral) {
+        print("Remote central did connect: \(remoteCentral)")
+    }
+    
+    internal func peripheral(peripheral: BKPeripheral, remoteCentralDidDisconnect remoteCentral: BKRemoteCentral) {
+        print("Remote central did disconnect: \(remoteCentral)")
+    }
+    
+    
 
 }
 
