@@ -1,10 +1,13 @@
 PODS:
+  - ADALiOS (1.2.6)
   - BluetoothKit (0.2.1)
 
 DEPENDENCIES:
+  - ADALiOS (~> 1.2.4)
   - BluetoothKit (~> 0.2.0)
 
 SPEC CHECKSUMS:
+  ADALiOS: ddfa6d7acf8e7d58e0d813ec5eec857c59f72fcc
   BluetoothKit: c1dfd8f529a1d4d2c0778b97a8937b5b68c75395
 
 COCOAPODS: 0.39.0
