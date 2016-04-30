@@ -48,6 +48,11 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
         self.tableView.reloadData()
     }
     
+    func clearDefaults() {
+        let appDomain = NSBundle.mainBundle().bundleIdentifier!
+        defaults.removePersistentDomainForName(appDomain)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

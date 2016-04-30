@@ -39,7 +39,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     internal override func viewWillDisappear(animated: Bool) {
-        central.interrupScan()
+        //central.interrupScan()
     }
     
     func scan() {
@@ -58,6 +58,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             if !indexPathsToInsert.isEmpty {
                 self.tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
             }
+            SettingsViewController().callNotification(discoveries)
             for device in discoveries {
                 print("-----------------------------")
                 print("\(device.localName): \(device.remotePeripheral.identifier.UUIDString)")
