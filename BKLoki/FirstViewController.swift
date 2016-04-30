@@ -93,12 +93,20 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         do {
             peripheral.delegate = self
             
-            //
+            
             let localName = UIDevice.currentDevice().identifierForVendor?.UUIDString
+<<<<<<< HEAD
+            /*
+            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
+            arrayofUUID.append(localName!)
+            defaults.setObject(arrayofUUID, forKey: "arrayofUUID")
+            */
+=======
 //            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
 //            arrayofUUID.append(localName!)
 //            defaults.setObject(arrayofUUID, forKey: "arrayofUUID")
             //
+>>>>>>> origin/master
             
             
             let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID:  characteristicUUID, localName: localName)
