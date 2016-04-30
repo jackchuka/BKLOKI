@@ -79,7 +79,11 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
     func initPeripheral() {
         do {
             peripheral.delegate = self
+<<<<<<< HEAD
             let localName = "My Cool App"
+=======
+            let localName = UIDevice.currentDevice().identifierForVendor?.UUIDString
+>>>>>>> origin/master
             let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID:  characteristicUUID, localName: localName)
             try peripheral.startWithConfiguration(configuration)
             // You are now ready for incoming connections
@@ -94,7 +98,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
     
     @IBAction func btnSendPressed(sender: AnyObject) {
         let data = "Hello beloved central!".dataUsingEncoding(NSUTF8StringEncoding)
-        print(discoveries.count)
+        print("discovered devices: \(discoveries.count)")
     }
 
     override func didReceiveMemoryWarning() {
