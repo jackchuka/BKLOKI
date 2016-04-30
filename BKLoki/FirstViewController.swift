@@ -14,6 +14,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
     
     private let peripheral = BKPeripheral()
     private let central = BKCentral()
+    private var discoveries = [BKDiscovery]()
     
     let serviceUUID = NSUUID(UUIDString: "470275F0-EF0A-4A20-9CEF-D160A4C25BF9")!
     let characteristicUUID = NSUUID(UUIDString: "E9CF5BAD-8D47-4C2E-A3D6-620115807AAD")!
@@ -31,6 +32,10 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
         scan()
     }
     
+    internal override func viewWillDisappear(animated: Bool) {
+        central.interrupScan()
+    }
+    
     func scan() {
         
         central.scanContinuouslyWithChangeHandler({ changes, discoveries in
@@ -40,14 +45,16 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
             for device in discoveries {
                 print(device.localName)
             }
+            self.discoveries = discoveries
             }, stateHandler: { newState in
+                //print(self.central.configuration?.dataServiceCharacteristicUUID)
                 if newState == .Scanning {
                     print("scanning")
                     return
                 } else if newState == .Stopped {
                     print("stopped")
                 }
-            }, duration: 3, inBetweenDelay: 3, errorHandler: { error in
+            }, errorHandler: { error in
                 // Handle error.
                 print(error)
         })
@@ -61,7 +68,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
             try central.startWithConfiguration(configuration)
             // You are now ready to discover and connect to peripherals.
             
-            print("test")
+            print("init central")
             
         } catch let error {
             // Handle error.
@@ -77,6 +84,8 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
             try peripheral.startWithConfiguration(configuration)
             // You are now ready for incoming connections
             
+            print("init peripheral")
+            
         } catch let error {
             // Handle error.
             print("Peripheral init failed")
@@ -85,7 +94,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
     
     @IBAction func btnSendPressed(sender: AnyObject) {
         let data = "Hello beloved central!".dataUsingEncoding(NSUTF8StringEncoding)
-        print(peripheral.connectedRemoteCentrals.count)
+        print(discoveries.count)
     }
 
     override func didReceiveMemoryWarning() {
