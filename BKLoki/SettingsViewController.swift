@@ -11,12 +11,17 @@ import BluetoothKit
 import CoreBluetooth
 import AVFoundation
 
-class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDelegate  {
+class SettingsViewController: UITableViewController,BKCentralDelegate, BKPeripheralDelegate, AVAudioPlayerDelegate  {
+    
+    var userEmailAddress: String!
+
+    @IBOutlet weak var microsoftsigninbutton: UIButton!
+    
     private let central = BKCentral()
     private let peripheral = BKPeripheral()
     private var discoveries = [BKDiscovery]()
     private var localName = String!()
-    var sound = AVAudioPlayer()
+    var player : AVAudioPlayer! = nil // will be Optional, must supply initializer
 
     
     let defaults = NSUserDefaults.standardUserDefaults()
@@ -26,9 +31,13 @@ class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //let path = NSBundle.mainBundle().pathForResource("answercellphone.wav", ofType:nil)!
-        //let url = NSURL(fileURLWithPath: path)
+        if(defaults.boolForKey("loggedin")){
+            microsoftsigninbutton.tintColor = UIColor.grayColor()
+        }
         /*
+        let path = NSBundle.mainBundle().pathForResource("answercellphone.wav", ofType:nil)!
+        let url = NSURL(fileURLWithPath: path)
+        
         do {
             sound = try AVAudioPlayer(contentsOfURL: url)
         } catch {
@@ -116,8 +125,16 @@ class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDe
             return
         }
         
-        //sound.play()
-
+        let path = NSBundle.mainBundle().pathForResource("answercellphone", ofType:"wav")
+        let fileURL = NSURL(fileURLWithPath: path!)
+        do {
+            try player = AVAudioPlayer(contentsOfURL: fileURL, fileTypeHint: nil)
+        } catch {
+            print("Error")
+        }
+        player.prepareToPlay()
+        player.delegate = self
+        player.play()
         
         let notification = UILocalNotification()
         notification.fireDate = NSDate(timeIntervalSinceNow: 5) // wait for 5 seconds before notifying
@@ -191,5 +208,143 @@ class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDe
     internal func peripheral(peripheral: BKPeripheral, remoteCentralDidDisconnect remoteCentral: BKRemoteCentral) {
         print("Remote central did disconnect: \(remoteCentral)")
     }
+
+    @IBAction func loginMicrosoft(sender: AnyObject) {
+        AuthenticationManager.sharedInstance?.acquireAuthToken ({
+            (result: AuthenticationResult) -> Void in
+            
+            switch result {
+            case .Success:
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let alertController = UIAlertController(title: "Congrats!", message: "You've successfully signed in", preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                })
+                
+            case .Failure(let error):
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    /*
+                    let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .Alert)
+                    alertController.addAction(UIAlertAction(title: "Close", style: .Cancel, handler: nil))
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    */
+                    print(error)
+                })
+            }
+        })
+        userEmailAddress = AuthenticationManager.sharedInstance?.userInformation?.userId
+        sendMail(self)
+
+    }
+    
+    
+    // MARK: IBActions
+    func sendMail(sender: AnyObject) {
+        if let uploadContent = mailContent() {
+            sendMailRestWithContent(uploadContent)
+        }
+        else {
+            print("error")
+        }
+    }
+    
+    
+    
+    
+    // MARK: Helper methods
+    
+    /**
+    Prepare mail content by loading the files from resources and replacing placeholders with the
+    HTML body.
+    */
+    func mailContent() -> NSData? {
+        var emailname = ""
+        if(defaults.boolForKey("loggedin")){
+            emailname = "Mail"
+        }else{
+            emailname = "EmailBody"
+        }
+        if let emailFilePath = NSBundle.mainBundle().pathForResource("EmailPostContent", ofType: "json"),
+            emailBodyFilePath = NSBundle.mainBundle().pathForResource(emailname, ofType: "html")
+        {
+            do {
+                // Prepare upload content
+                let emailContent = try String(contentsOfFile: emailFilePath, encoding: NSUTF8StringEncoding)
+                let emailBodyRaw = try String(contentsOfFile: emailBodyFilePath, encoding: NSUTF8StringEncoding)
+                // Request doesn't accept a single quotation mark("), so change it to the acceptable form (\")
+                let emailValidBody = emailBodyRaw.stringByReplacingOccurrencesOfString("\"", withString: "\\\"")
+                
+                let emailPostContent = emailContent.stringByReplacingOccurrencesOfString("<EMAIL>", withString: "\(userEmailAddress)")
+                    .stringByReplacingOccurrencesOfString("<CONTENTTYPE>", withString: "HTML")
+                    .stringByReplacingOccurrencesOfString("<CONTENT>", withString: emailValidBody)
+                
+                return emailPostContent.dataUsingEncoding(NSUTF8StringEncoding)
+            }
+            catch {
+                // Error handling in case file loading fails.
+                return nil
+            }
+        }
+        // Error handling in case files aren't present.
+        return nil
+    }
+    
+    func sendMailRestWithContent(content: NSData) {
+        // Acquire an access token, if logged in already, this shouldn't bring up an authentication window.
+        // However, if the token is expired, user will be asked to sign in again.
+        AuthenticationManager.sharedInstance!.acquireAuthToken {
+            (result: AuthenticationResult) -> Void in
+            
+            switch result {
+                
+            case .Success:
+                // Upon success, send mail.
+                self.defaults.setBool(true, forKey: "loggedin")
+                let request = NSMutableURLRequest(URL: NSURL(string: "https://graph.microsoft.com/v1.0/me/microsoft.graph.sendmail")!)
+                request.HTTPMethod = "POST"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                request.setValue("application/json, text/plain, */*", forHTTPHeaderField: "Accept")
+                
+                request.setValue("Bearer \(AuthenticationManager.sharedInstance!.accessToken!)", forHTTPHeaderField: "Authorization")
+                
+                request.HTTPBody = content
+                
+                let task = NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler:
+                    {
+                        (data, response, error) -> Void in
+                        
+                        if let _ = error {
+                            print(error)
+                            
+                            return
+                        }
+                        
+                        let statusCode = (response as! NSHTTPURLResponse).statusCode
+                        
+                        if statusCode == 202 {
+                            
+                        }
+                        else {
+                            print("response: \(response)")
+                            print(String(data: data!, encoding: NSUTF8StringEncoding))
+                            
+                        }
+                })
+                
+                task.resume()
+                
+            case .Failure(let error):
+                // Upon failure, alert and go back.
+                self.defaults.setBool(false, forKey: "loggedin")
+                print(error)
+                
+                
+                
+            }
+        }
+    }
+    
+    
+
 
 }
