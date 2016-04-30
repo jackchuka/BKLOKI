@@ -16,8 +16,9 @@ class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDe
     private let peripheral = BKPeripheral()
     private var discoveries = [BKDiscovery]()
     private var localName = String!()
-    var audioPlayer = AVAudioPlayer()
+    var sound = AVAudioPlayer()
 
+    
     let defaults = NSUserDefaults.standardUserDefaults()
     let serviceUUID = NSUUID(UUIDString: "470275F0-EF0A-4A20-9CEF-D160A4C25BF9")!
     let characteristicUUID = NSUUID(UUIDString: "E9CF5BAD-8D47-4C2E-A3D6-620115807AAD")!
@@ -25,17 +26,14 @@ class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var alertSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("answercellphone", ofType: "wav"))
-        println(alertSound)
+        let path = NSBundle.mainBundle().pathForResource("answercellphone.wav", ofType:nil)!
+        let url = NSURL(fileURLWithPath: path)
         
-        // Removed deprecated use of AVAudioSessionDelegate protocol
-        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
-        AVAudioSession.sharedInstance().setActive(true, error: nil)
-        
-        var error:NSError?
-        audioPlayer = AVAudioPlayer(contentsOfURL: alertSound, error: &error)
-        audioPlayer.prepareToPlay()
-        audioPlayer.play()
+        do {
+            sound = try AVAudioPlayer(contentsOfURL: url)
+        } catch {
+            print("Error")
+        }
         
         self.initCentral()
         self.initPeripheral()
@@ -112,6 +110,9 @@ class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDe
             presentViewController(ac, animated: true, completion: nil)
             return
         }
+        
+        sound.play()
+
         
         let notification = UILocalNotification()
         notification.fireDate = NSDate(timeIntervalSinceNow: 1) // wait for 5 seconds before notifying
