@@ -98,13 +98,8 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             peripheral.delegate = self
             
             localName = UIDevice.currentDevice().name
+            print(localName)
             UUID = UIDevice.currentDevice().identifierForVendor!.UUIDString
-
-//            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
-//            arrayofUUID.append(localName!)
-//            defaults.setObject(arrayofUUID, forKey: "arrayofUUID")
-            
-            
             
             let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID:  characteristicUUID, localName: localName)
             try peripheral.startWithConfiguration(configuration)
@@ -147,18 +142,6 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.row != discoveries.count) {
-            let remoteDeviceName = discoveries[indexPath.row].localName!
-            
-            if(defaults.objectForKey("devicename") == nil){
-                defaults.setObject([remoteDeviceName], forKey: "devicename")
-            }else{
-                var arr = defaults.arrayForKey("devicename")
-                arr?.append(remoteDeviceName)
-                print("array: \(arr)")
-                defaults.setObject(arr, forKey: "devicename")
-            }
-            
-
             self.performSegueWithIdentifier("add", sender: self)
         }
     }
