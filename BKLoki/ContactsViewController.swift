@@ -101,5 +101,29 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
         return 75.0
     }
     
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            if(indexPath.section == 0){
+                friends.removeAtIndex(indexPath.row)
+                var x = defaults.arrayForKey("friend")
+                x?.removeAtIndex(indexPath.row)
+                defaults.setObject(x, forKey: "friend")
+
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            }else{
+                enemies.removeAtIndex(indexPath.row)
+                var x = defaults.arrayForKey("enemy")
+                x?.removeAtIndex(indexPath.row)
+                defaults.setObject(x, forKey: "enemy")
+                
+
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+
+            }
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        }
+    }
+    
 }
 
