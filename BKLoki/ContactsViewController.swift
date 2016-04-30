@@ -14,7 +14,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     let defaults = NSUserDefaults.standardUserDefaults()
     private let central = BKCentral()
     var users = [String]()
-    var images = [String]()
+    var enemyimages = ["enemy", "devil", "angry"]
+    var friendimages = ["friend1", "friend2", "friend3", "friend4"]
     var friends = [String]()
     var enemies = [String]()
     @IBOutlet weak var tableView: UITableView!
@@ -27,11 +28,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
             users = ["Charlotte", "Billy", "Charlie", "Sammy"]
             defaults.setObject(users, forKey: "namearray")
         }
-        if(defaults.objectForKey("imagearray") == nil){
-            images = ["blah", "blah", "blah", "blah"]
-            defaults.setObject(images, forKey: "imagearray")
-
-        }
         if(defaults.objectForKey("enemy") == nil){
             enemies = ["Charlotte", "Charlie"]
             defaults.setObject(enemies, forKey: "enemy")
@@ -43,7 +39,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
             
         }
         users = defaults.objectForKey("namearray") as! [String]
-        images = defaults.objectForKey("imagearray") as! [String]
         enemies = defaults.objectForKey("enemy") as! [String]
         friends = defaults.objectForKey("friend") as! [String]
         self.tableView.reloadData()
@@ -80,8 +75,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
         
         if(indexPath.section == 0){
             cell.name.text = friends[indexPath.row]
+            cell.imageofcell?.image = UIImage(named: friendimages[indexPath.row])
         }else{
             cell.name.text = enemies[indexPath.row]
+            cell.imageofcell.image = UIImage(named:enemyimages[indexPath.row])
         }
         return cell
 

@@ -29,6 +29,17 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         newname = textField.text
         
+        //corresponding names to UUIDs
+        if(defaults.objectForKey("correspondingNames") == nil){
+            defaults.setObject([newname], forKey: "correspondingNames")
+        }else{
+            let arr = defaults.objectForKey("correspondingNames")
+            arr?.appendString(newname)
+            defaults.setObject(arr, forKey: "correspondingNames")
+        }
+        
+        
+        
         //friend or enemy
         friend = friendorenemy.text
         if(friend.lowercaseString == "friend"){

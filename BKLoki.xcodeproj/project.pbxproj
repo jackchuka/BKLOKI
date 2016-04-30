@@ -18,6 +18,11 @@
 		81EDD7CD1CD4EDD700E4795C /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD7CC1CD4EDD700E4795C /* AddContactViewController.swift */; };
 		81EDD7CF1CD4F05100E4795C /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81EDD7CE1CD4F05100E4795C /* ContactCell.xib */; };
 		81EDD7D11CD4F0C400E4795C /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD7D01CD4F0C400E4795C /* ContactCell.swift */; };
+		81EDD7D31CD5287400E4795C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD7D21CD5287400E4795C /* SettingsViewController.swift */; };
+		81EDD7D71CD53A8000E4795C /* EmailBody.html in Resources */ = {isa = PBXBuildFile; fileRef = 81EDD7D61CD53A8000E4795C /* EmailBody.html */; };
+		81EDD7D91CD53A8600E4795C /* Mail.html in Resources */ = {isa = PBXBuildFile; fileRef = 81EDD7D81CD53A8600E4795C /* Mail.html */; };
+		81EDD7DB1CD53AA300E4795C /* AuthenticationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD7DA1CD53AA300E4795C /* AuthenticationConstants.swift */; };
+		81EDD7DD1CD53AB500E4795C /* EmailPostContent.json in Resources */ = {isa = PBXBuildFile; fileRef = 81EDD7DC1CD53AB500E4795C /* EmailPostContent.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +39,11 @@
 		81EDD7CC1CD4EDD700E4795C /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
 		81EDD7CE1CD4F05100E4795C /* ContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
 		81EDD7D01CD4F0C400E4795C /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		81EDD7D21CD5287400E4795C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		81EDD7D61CD53A8000E4795C /* EmailBody.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = EmailBody.html; sourceTree = "<group>"; };
+		81EDD7D81CD53A8600E4795C /* Mail.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Mail.html; sourceTree = "<group>"; };
+		81EDD7DA1CD53AA300E4795C /* AuthenticationConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationConstants.swift; sourceTree = "<group>"; };
+		81EDD7DC1CD53AB500E4795C /* EmailPostContent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = EmailPostContent.json; sourceTree = "<group>"; };
 		D5CDA40D067318D484A8398E /* Pods-BKLoki.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BKLoki.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BKLoki/Pods-BKLoki.debug.xcconfig"; sourceTree = "<group>"; };
 		E8DF28AD2E9022D27E73499F /* Pods_BKLoki.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BKLoki.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -82,12 +92,17 @@
 			children = (
 				15EAB54F1CD4B20400916415 /* AppDelegate.swift */,
 				15EAB5511CD4B20400916415 /* FirstViewController.swift */,
+				81EDD7D21CD5287400E4795C /* SettingsViewController.swift */,
 				15EAB5531CD4B20400916415 /* ContactsViewController.swift */,
 				81EDD7CC1CD4EDD700E4795C /* AddContactViewController.swift */,
 				15EAB5551CD4B20400916415 /* Main.storyboard */,
 				81EDD7CE1CD4F05100E4795C /* ContactCell.xib */,
 				81EDD7D01CD4F0C400E4795C /* ContactCell.swift */,
 				81EDD7CA1CD4EDBD00E4795C /* TitledTextField.swift */,
+				81EDD7D61CD53A8000E4795C /* EmailBody.html */,
+				81EDD7D81CD53A8600E4795C /* Mail.html */,
+				81EDD7DC1CD53AB500E4795C /* EmailPostContent.json */,
+				81EDD7DA1CD53AA300E4795C /* AuthenticationConstants.swift */,
 				15EAB5581CD4B20400916415 /* Assets.xcassets */,
 				15EAB55A1CD4B20400916415 /* LaunchScreen.storyboard */,
 				15EAB55D1CD4B20400916415 /* Info.plist */,
@@ -166,6 +181,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				81EDD7CF1CD4F05100E4795C /* ContactCell.xib in Resources */,
+				81EDD7D91CD53A8600E4795C /* Mail.html in Resources */,
+				81EDD7DD1CD53AB500E4795C /* EmailPostContent.json in Resources */,
+				81EDD7D71CD53A8000E4795C /* EmailBody.html in Resources */,
 				15EAB55C1CD4B20400916415 /* LaunchScreen.storyboard in Resources */,
 				15EAB5591CD4B20400916415 /* Assets.xcassets in Resources */,
 				15EAB5571CD4B20400916415 /* Main.storyboard in Resources */,
@@ -229,8 +247,10 @@
 			files = (
 				81EDD7D11CD4F0C400E4795C /* ContactCell.swift in Sources */,
 				81EDD7CD1CD4EDD700E4795C /* AddContactViewController.swift in Sources */,
+				81EDD7D31CD5287400E4795C /* SettingsViewController.swift in Sources */,
 				15EAB5541CD4B20400916415 /* ContactsViewController.swift in Sources */,
 				15EAB5501CD4B20400916415 /* AppDelegate.swift in Sources */,
+				81EDD7DB1CD53AA300E4795C /* AuthenticationConstants.swift in Sources */,
 				15EAB5521CD4B20400916415 /* FirstViewController.swift in Sources */,
 				81EDD7CB1CD4EDBD00E4795C /* TitledTextField.swift in Sources */,
 			);

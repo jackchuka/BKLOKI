@@ -1,0 +1,17 @@
+{
+    "Message": {
+        "Subject": "It's time to take a gulp!",
+        "Body": {
+            "ContentType": "<CONTENTTYPE>",
+            "Content": "<CONTENT>"
+        },
+        "ToRecipients": [
+                         {
+                         "EmailAddress": {
+                         "Address": "<EMAIL>"
+                         }
+                         }
+                         ]
+    },
+    "SaveToSentItems": "true"
+}

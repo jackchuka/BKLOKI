@@ -1,24 +1,23 @@
 //
-//  FirstViewController.swift
+//  SettingsViewController.swift
 //  BKLoki
 //
-//  Created by Masanori Uehara on 4/30/16.
+//  Created by Sara Du on 4/30/16.
 //  Copyright © 2016 Masanori Uehara. All rights reserved.
 //
 
 import UIKit
 import BluetoothKit
 import CoreBluetooth
+import AVFoundation
 
-class FirstViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, BKCentralDelegate, BKPeripheralDelegate {
-    
+class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDelegate  {
     private let central = BKCentral()
     private let peripheral = BKPeripheral()
     private var discoveries = [BKDiscovery]()
-    private var UUID = String!()
     private var localName = String!()
-    
-    @IBOutlet weak var tableView: UITableView!
+    var audioPlayer = AVAudioPlayer()
+
     let defaults = NSUserDefaults.standardUserDefaults()
     let serviceUUID = NSUUID(UUIDString: "470275F0-EF0A-4A20-9CEF-D160A4C25BF9")!
     let characteristicUUID = NSUUID(UUIDString: "E9CF5BAD-8D47-4C2E-A3D6-620115807AAD")!
@@ -26,15 +25,30 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        var alertSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("answercellphone", ofType: "wav"))
+        println(alertSound)
+        
+        // Removed deprecated use of AVAudioSessionDelegate protocol
+        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
+        AVAudioSession.sharedInstance().setActive(true, error: nil)
+        
+        var error:NSError?
+        audioPlayer = AVAudioPlayer(contentsOfURL: alertSound, error: &error)
+        audioPlayer.prepareToPlay()
+        audioPlayer.play()
+        
         self.initCentral()
         self.initPeripheral()
-        tableView.delegate = self
+        
+        //register for notification
+        registerLocal(UIViewController)
+
     }
     
     internal override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        print("appear")
+        print("View did appear")
         scan()
     }
     
@@ -51,24 +65,30 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             let indexPathsToRemove = changes.filter({ $0 == .Remove(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
             self.discoveries = discoveries
             let indexPathsToInsert = changes.filter({ $0 == .Insert(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
-            if !indexPathsToRemove.isEmpty {
-                self.tableView.deleteRowsAtIndexPaths(indexPathsToRemove, withRowAnimation: UITableViewRowAnimation.Automatic)
-            }
             
-            if !indexPathsToInsert.isEmpty {
-                self.tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
-            }
             for device in discoveries {
                 print("-----------------------------")
                 print("\(device.localName): \(device.remotePeripheral.identifier.UUIDString)")
+                
+                
+                //Sending notifications
+                let UUIDarray = self.defaults.objectForKey("UUID") as! [String]
+                let x = UUIDarray.count
+                for i in 0...x-1{
+                   // if(UUIDarray[i] == device.remotePeripheral.identifier.UUIDString){
+                        let name = self.defaults.objectForKey("correspondingNames") as! [String]
+                        self.scheduleLocal(UIViewController(), name: name[i])
+                    //}
+                }
+                
             }
+            
             }, stateHandler: { newState in
                 if newState == .Scanning {
                     print("scanning")
                     return
                 } else if newState == .Stopped {
                     self.discoveries.removeAll()
-                    self.tableView.reloadData()
                     print("stopped")
                 }
             }, errorHandler: { error in
@@ -77,6 +97,32 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         })
         
     }
+    func registerLocal(sender: AnyObject) {
+        let notificationSettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSettings)
+    }
+    
+    func scheduleLocal(sender: AnyObject, name: String) {
+        guard let settings = UIApplication.sharedApplication().currentUserNotificationSettings() else { return }
+        
+        // if notification failed to initialize
+        if settings.types == .None {
+            let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .Alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            presentViewController(ac, animated: true, completion: nil)
+            return
+        }
+        
+        let notification = UILocalNotification()
+        notification.fireDate = NSDate(timeIntervalSinceNow: 1) // wait for 5 seconds before notifying
+        notification.alertBody = name + " is approaching"
+        notification.alertAction = "Run away?" // Displayed as "Slide to..."
+        //notification.soundName = UILocalNotificationDefaultSoundName
+        //notification.userInfo = ["CustomField1": "Sara-Max"]
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+    }
+    
+
     
     func initCentral() {
         do {
@@ -97,12 +143,12 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         do {
             peripheral.delegate = self
             
+            
             localName = UIDevice.currentDevice().name
-             UUID = UIDevice.currentDevice().identifierForVendor?.UUIDString
-
-//            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
-//            arrayofUUID.append(localName!)
-//            defaults.setObject(arrayofUUID, forKey: "arrayofUUID")
+            
+            //            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
+            //            arrayofUUID.append(localName!)
+            //            defaults.setObject(arrayofUUID, forKey: "arrayofUUID")
             
             
             
@@ -118,45 +164,6 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    
-    internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return discoveries.count + 1
-    }
-    
-    internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = self.tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
-        
-        if cell == nil {
-            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
-        }
-        
-        if (indexPath.row == discoveries.count) {
-            cell.textLabel?.text = "MY UUID: \((UIDevice.currentDevice().identifierForVendor?.UUIDString)!)"
-            cell.accessoryType = .None
-            return cell
-        }
-        
-        let discovery = discoveries[indexPath.row]
-
-        cell.textLabel?.text = discovery.localName != nil ? discovery.localName : discovery.remotePeripheral.name
-        cell.accessoryType = .None
-        
-        return cell
-        
-    }
-    
-    internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if(defaults.objectForKey("UUID") == nil){
-            defaults.setObject([UUID], forKey: "UUID")
-        }else{
-            let arr = defaults.objectForKey("UUID")
-            arr?.appendString(UUID)
-            defaults.setObject(arr, forKey: "UUID")
-        }
-        
-
-        self.performSegueWithIdentifier("add", sender: self)
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -178,9 +185,5 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     internal func peripheral(peripheral: BKPeripheral, remoteCentralDidDisconnect remoteCentral: BKRemoteCentral) {
         print("Remote central did disconnect: \(remoteCentral)")
     }
-    @IBAction func unwindToMap(segue: UIStoryboardSegue) {
-    }
-
 
 }
-
