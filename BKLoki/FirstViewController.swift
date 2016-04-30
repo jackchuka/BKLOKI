@@ -19,8 +19,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
     let serviceUUID = NSUUID(UUIDString: "470275F0-EF0A-4A20-9CEF-D160A4C25BF9")!
     let characteristicUUID = NSUUID(UUIDString: "E9CF5BAD-8D47-4C2E-A3D6-620115807AAD")!
     
-    
-    internal override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         self.initCentral()
@@ -121,7 +120,6 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
         print("Remote central did disconnect: \(remoteCentral)")
     }
     
-    
-    
+
 }
 
