@@ -10,11 +10,13 @@ import UIKit
 import BluetoothKit
 
 class SecondViewController: UIViewController {
+    
+    private let central = BKCentral()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let central = BKCentral()
+        
         do {
             let serviceUUID = NSUUID(UUIDString: "6E6B5C64-FAF7-40AE-9C21-D4933AF45B23")!
             let characteristicUUID = NSUUID(UUIDString: "477A2967-1FAB-4DC5-920A-DEE5DE685A3D")!
@@ -24,13 +26,11 @@ class SecondViewController: UIViewController {
             
             print("test")
             
-            central.scanContinuouslyWithChangeHandler({ changes, discoveries in
-                print("available")
-                }, stateHandler: { newState in
-                    // Handle newState, BKCentral.ContinuousScanState.
-                    // This is where you'd ie. start/stop an activity indicator.
-                }, duration: 3, inBetweenDelay: 3, errorHandler: { error in
+            central.scanWithDuration(3, progressHandler: { newDiscoveries in
+                // Handle newDiscoveries, [BKDiscovery].
+                }, completionHandler: { result, error in
                     // Handle error.
+                    // If no error, handle result, [BKDiscovery].
             })
             
         } catch let error {
