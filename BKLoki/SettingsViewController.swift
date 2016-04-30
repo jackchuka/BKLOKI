@@ -26,15 +26,15 @@ class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let path = NSBundle.mainBundle().pathForResource("answercellphone.wav", ofType:nil)!
-        let url = NSURL(fileURLWithPath: path)
-        
+        //let path = NSBundle.mainBundle().pathForResource("answercellphone.wav", ofType:nil)!
+        //let url = NSURL(fileURLWithPath: path)
+        /*
         do {
             sound = try AVAudioPlayer(contentsOfURL: url)
         } catch {
             print("Error")
         }
-        
+        */
         self.initCentral()
         self.initPeripheral()
         
@@ -70,13 +70,17 @@ class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDe
                 
                 
                 //Sending notifications
-                let UUIDarray = self.defaults.objectForKey("UUID") as! [String]
-                let x = UUIDarray.count
+                if(self.defaults.objectForKey("correspondingname") != nil){
+                let devicenamearray = self.defaults.objectForKey("correspondingname") as! [String]
+                print(devicenamearray)
+                let x = devicenamearray.count
                 for i in 0...x-1{
                    // if(UUIDarray[i] == device.remotePeripheral.identifier.UUIDString){
-                        let name = self.defaults.objectForKey("correspondingNames") as! [String]
+                        let name = self.defaults.objectForKey("correspondingname") as! [String]
                         self.scheduleLocal(UIViewController(), name: name[i])
+                    print("scheduling the notification")
                     //}
+                }
                 }
                 
             }

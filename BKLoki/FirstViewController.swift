@@ -185,19 +185,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     @IBAction func unwindToMap(segue: UIStoryboardSegue) {
     }
-    @objc private func sendData() {
-        
-        for remoteCentral in peripheral.connectedRemoteCentrals {
-            peripheral.sendData(data, toRemoteCentral: remoteCentral) { data, remoteCentral, error in
-                guard error == nil else {
-                    print("Failed to send")
-                    return
-                }
-                 print("Sent to \(remoteCentral)")
-            }
-        }
-    }
-
+   
 
 }
 
