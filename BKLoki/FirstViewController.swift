@@ -79,7 +79,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
     func initPeripheral() {
         do {
             peripheral.delegate = self
-            let localName = "My Cool Peripheral"
+            let localName = "My Cool App"
             let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID:  characteristicUUID, localName: localName)
             try peripheral.startWithConfiguration(configuration)
             // You are now ready for incoming connections
