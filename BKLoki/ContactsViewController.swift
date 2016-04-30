@@ -116,7 +116,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
                 x?.removeAtIndex(indexPath.row)
                 defaults.setObject(x, forKey: "enemy")
                 
-
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
 
             }

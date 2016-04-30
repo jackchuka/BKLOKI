@@ -9,23 +9,26 @@
 import UIKit
 
 class AddContactViewController: UIViewController, UITextFieldDelegate {
+    
     let defaults = NSUserDefaults.standardUserDefaults()
+    
     @IBOutlet weak var textField: TitledTextField!
     @IBOutlet weak var friendorenemy: TitledTextField!
+    
     var newname: String!
     var friend: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         textField.delegate = self
-        
-        
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
+    
     func textFieldDidEndEditing(textField: UITextField) {
         newname = textField.text
         
@@ -37,8 +40,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
             arr?.append(newname)
             defaults.setObject(arr, forKey: "correspondingNames")
         }
-        
-        
         
         //friend or enemy
         friend = friendorenemy.text
