@@ -9,23 +9,31 @@
 /* Begin PBXBuildFile section */
 		15EAB5501CD4B20400916415 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAB54F1CD4B20400916415 /* AppDelegate.swift */; };
 		15EAB5521CD4B20400916415 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAB5511CD4B20400916415 /* FirstViewController.swift */; };
-		15EAB5541CD4B20400916415 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAB5531CD4B20400916415 /* SecondViewController.swift */; };
+		15EAB5541CD4B20400916415 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAB5531CD4B20400916415 /* ContactsViewController.swift */; };
 		15EAB5571CD4B20400916415 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15EAB5551CD4B20400916415 /* Main.storyboard */; };
 		15EAB5591CD4B20400916415 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15EAB5581CD4B20400916415 /* Assets.xcassets */; };
 		15EAB55C1CD4B20400916415 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15EAB55A1CD4B20400916415 /* LaunchScreen.storyboard */; };
 		457D06D3217A89539B61780C /* Pods_BKLoki.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8DF28AD2E9022D27E73499F /* Pods_BKLoki.framework */; };
+		81EDD7CB1CD4EDBD00E4795C /* TitledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD7CA1CD4EDBD00E4795C /* TitledTextField.swift */; };
+		81EDD7CD1CD4EDD700E4795C /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD7CC1CD4EDD700E4795C /* AddContactViewController.swift */; };
+		81EDD7CF1CD4F05100E4795C /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81EDD7CE1CD4F05100E4795C /* ContactCell.xib */; };
+		81EDD7D11CD4F0C400E4795C /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD7D01CD4F0C400E4795C /* ContactCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		15EAB54C1CD4B20400916415 /* BKLoki.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BKLoki.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15EAB54F1CD4B20400916415 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15EAB5511CD4B20400916415 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		15EAB5531CD4B20400916415 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		15EAB5531CD4B20400916415 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		15EAB5561CD4B20400916415 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		15EAB5581CD4B20400916415 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		15EAB55B1CD4B20400916415 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		15EAB55D1CD4B20400916415 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7284B657F39C5AAE88C9627D /* Pods-BKLoki.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BKLoki.release.xcconfig"; path = "Pods/Target Support Files/Pods-BKLoki/Pods-BKLoki.release.xcconfig"; sourceTree = "<group>"; };
+		81EDD7CA1CD4EDBD00E4795C /* TitledTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TitledTextField.swift; sourceTree = "<group>"; };
+		81EDD7CC1CD4EDD700E4795C /* AddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddContactViewController.swift; sourceTree = "<group>"; };
+		81EDD7CE1CD4F05100E4795C /* ContactCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
+		81EDD7D01CD4F0C400E4795C /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		D5CDA40D067318D484A8398E /* Pods-BKLoki.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BKLoki.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BKLoki/Pods-BKLoki.debug.xcconfig"; sourceTree = "<group>"; };
 		E8DF28AD2E9022D27E73499F /* Pods_BKLoki.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BKLoki.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -74,8 +82,12 @@
 			children = (
 				15EAB54F1CD4B20400916415 /* AppDelegate.swift */,
 				15EAB5511CD4B20400916415 /* FirstViewController.swift */,
-				15EAB5531CD4B20400916415 /* SecondViewController.swift */,
+				15EAB5531CD4B20400916415 /* ContactsViewController.swift */,
+				81EDD7CC1CD4EDD700E4795C /* AddContactViewController.swift */,
 				15EAB5551CD4B20400916415 /* Main.storyboard */,
+				81EDD7CE1CD4F05100E4795C /* ContactCell.xib */,
+				81EDD7D01CD4F0C400E4795C /* ContactCell.swift */,
+				81EDD7CA1CD4EDBD00E4795C /* TitledTextField.swift */,
 				15EAB5581CD4B20400916415 /* Assets.xcassets */,
 				15EAB55A1CD4B20400916415 /* LaunchScreen.storyboard */,
 				15EAB55D1CD4B20400916415 /* Info.plist */,
@@ -153,6 +165,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81EDD7CF1CD4F05100E4795C /* ContactCell.xib in Resources */,
 				15EAB55C1CD4B20400916415 /* LaunchScreen.storyboard in Resources */,
 				15EAB5591CD4B20400916415 /* Assets.xcassets in Resources */,
 				15EAB5571CD4B20400916415 /* Main.storyboard in Resources */,
@@ -214,9 +227,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15EAB5541CD4B20400916415 /* SecondViewController.swift in Sources */,
+				81EDD7D11CD4F0C400E4795C /* ContactCell.swift in Sources */,
+				81EDD7CD1CD4EDD700E4795C /* AddContactViewController.swift in Sources */,
+				15EAB5541CD4B20400916415 /* ContactsViewController.swift in Sources */,
 				15EAB5501CD4B20400916415 /* AppDelegate.swift in Sources */,
 				15EAB5521CD4B20400916415 /* FirstViewController.swift in Sources */,
+				81EDD7CB1CD4EDBD00E4795C /* TitledTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +356,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.masanoriuehara.BKLoki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -356,6 +373,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.masanoriuehara.BKLoki;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

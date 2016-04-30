@@ -2,8 +2,26 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Item-->
+        <scene sceneID="NHI-HP-24L">
+            <objects>
+                <navigationController id="F76-ot-Txw" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="tYH-2p-x5z"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="php-fb-FjF">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="rootViewController" id="NI9-to-Bs4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2dx-I4-dWu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="353" y="-360"/>
+        </scene>
         <!--First-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
@@ -46,15 +64,33 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
+                    <navigationItem key="navigationItem" id="3gF-sh-bk3"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="-320"/>
+            <point key="canvasLocation" x="1021" y="-360"/>
         </scene>
-        <!--Second-->
+        <!--Item-->
+        <scene sceneID="Zb6-qn-8LE">
+            <objects>
+                <navigationController id="udU-en-aEf" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="ySH-ca-3JL"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="aWl-Rl-Fef">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="rootViewController" id="Ii8-45-wVg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MRb-xZ-muP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="192" y="635"/>
+        </scene>
+        <!--Contacts-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController id="8rJ-Kc-sve" customClass="SecondViewController" customModule="BKLoki" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="8rJ-Kc-sve" customClass="ContactsViewController" customModule="BKLoki" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="L7p-HK-0SC"/>
                         <viewControllerLayoutGuide type="bottom" id="Djb-ko-YwX"/>
@@ -63,33 +99,79 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="Second View" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="zEq-FU-wV5">
-                                <rect key="frame" x="195" y="279" width="210" height="42"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MYK-do-d05">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="36"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Loaded by SecondViewController" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDk-cv-Gan">
-                                <rect key="frame" x="192" y="329" width="216" height="17"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <connections>
+                                    <outlet property="dataSource" destination="8rJ-Kc-sve" id="feB-FN-dFE"/>
+                                    <outlet property="delegate" destination="8rJ-Kc-sve" id="q8Z-dI-UNo"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="NDk-cv-Gan" firstAttribute="top" secondItem="zEq-FU-wV5" secondAttribute="bottom" constant="8" symbolic="YES" id="Day-4N-Vmt"/>
-                            <constraint firstItem="NDk-cv-Gan" firstAttribute="centerX" secondItem="zEq-FU-wV5" secondAttribute="centerX" id="JgO-Fn-dHn"/>
-                            <constraint firstAttribute="centerX" secondItem="zEq-FU-wV5" secondAttribute="centerX" id="qqM-NS-xev"/>
-                            <constraint firstAttribute="centerY" secondItem="zEq-FU-wV5" secondAttribute="centerY" id="qzY-Ky-pLD"/>
+                            <constraint firstItem="MYK-do-d05" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="5OW-NP-80A"/>
+                            <constraint firstItem="MYK-do-d05" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="PW4-gv-Ldr"/>
+                            <constraint firstItem="MYK-do-d05" firstAttribute="bottom" secondItem="Djb-ko-YwX" secondAttribute="top" id="duz-68-bHl"/>
+                            <constraint firstAttribute="trailing" secondItem="MYK-do-d05" secondAttribute="trailing" id="nW6-UJ-rsC"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Second" image="second" id="cPa-gy-q4n"/>
+                    <navigationItem key="navigationItem" title="Contacts" id="Whk-Lb-mut">
+                        <barButtonItem key="rightBarButtonItem" title="Add" id="QWX-CA-iXF">
+                            <connections>
+                                <segue destination="gru-XU-usL" kind="show" id="M58-IM-LSQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="MYK-do-d05" id="0Gd-5f-mAO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="360"/>
+            <point key="canvasLocation" x="1098" y="635"/>
+        </scene>
+        <!--New Contact-->
+        <scene sceneID="Vdc-qe-bfi">
+            <objects>
+                <viewController id="gru-XU-usL" customClass="AddContactViewController" customModule="BKLoki" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="V15-g7-SqM"/>
+                        <viewControllerLayoutGuide type="bottom" id="rib-8H-ZOS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="u2C-57-M7f">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name of Contact" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IZv-Fj-vx4" customClass="TitledTextField" customModule="BKLoki" customModuleProvider="target">
+                                <rect key="frame" x="20" y="195" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="IZv-Fj-vx4" firstAttribute="trailing" secondItem="u2C-57-M7f" secondAttribute="trailingMargin" id="ENQ-9S-2VU"/>
+                            <constraint firstItem="IZv-Fj-vx4" firstAttribute="top" secondItem="V15-g7-SqM" secondAttribute="bottom" constant="131" id="JMf-Qb-umb"/>
+                            <constraint firstItem="IZv-Fj-vx4" firstAttribute="leading" secondItem="u2C-57-M7f" secondAttribute="leadingMargin" id="ZGz-4Z-b3Q"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Contact" id="MEQ-31-TWW">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="EuI-eP-wCb">
+                            <connections>
+                                <segue destination="MpL-Ui-2xz" kind="unwind" unwindAction="unwindToMap:" id="Nk9-Ju-IuK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="textField" destination="IZv-Fj-vx4" id="FqN-1V-Q4b"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gxy-8V-KhY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="MpL-Ui-2xz" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1785" y="635"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -102,13 +184,13 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
-                        <segue destination="9pv-A4-QxB" kind="relationship" relationship="viewControllers" id="u7Y-xg-7CH"/>
+                        <segue destination="udU-en-aEf" kind="relationship" relationship="viewControllers" id="lzQ-kh-DqS"/>
+                        <segue destination="F76-ot-Txw" kind="relationship" relationship="viewControllers" id="XNh-H9-1Je"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="0.0" y="0.0"/>
+            <point key="canvasLocation" x="-334" y="-133"/>
         </scene>
     </scenes>
     <resources>
