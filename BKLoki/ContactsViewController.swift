@@ -65,8 +65,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 75.0
     }
-    @IBAction func unwindToMap(segue: UIStoryboardSegue) {
-    }
-
+    
 }
 

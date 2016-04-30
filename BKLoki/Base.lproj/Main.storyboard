@@ -160,7 +160,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="UUIDfield" destination="PKB-Q6-Pe1" id="A2h-gh-ZlV"/>
                         <outlet property="textField" destination="IZv-Fj-vx4" id="FqN-1V-Q4b"/>
                     </connections>
                 </viewController>

@@ -11,9 +11,9 @@ import UIKit
 class AddContactViewController: UIViewController, UITextFieldDelegate {
     let defaults = NSUserDefaults.standardUserDefaults()
     @IBOutlet weak var textField: TitledTextField!
-    @IBOutlet weak var UUIDfield: TitledTextField!
+    @IBOutlet weak var friendorenemy: TitledTextField!
     var newname: String!
-    var UUID: String!
+    var friend: String!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +28,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     }
     func textFieldDidEndEditing(textField: UITextField) {
         newname = textField.text
-        UUID = UUIDfield.text
+        friend = friendorenemy.text
         var namearray = defaults.objectForKey("namearray") as! [String]
         namearray.append(newname)
         var imagearray = defaults.objectForKey("imagearray") as! [String]
