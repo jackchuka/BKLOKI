@@ -16,6 +16,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        print("didFinishLaunchingWithOptions...")
+        
+        if let options = launchOptions {
+            if let notification = options[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+                if let userInfo = notification.userInfo {
+                    let customField1 = userInfo["CustomField1"] as! String
+                    // do something neat here
+                    print("Customized launch with parameter CustomField1 \(customField1)")
+                }
+            }
+        }
+
         return true
     }
 

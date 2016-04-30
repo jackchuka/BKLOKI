@@ -14,8 +14,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     let defaults = NSUserDefaults.standardUserDefaults()
     private let central = BKCentral()
     var users = [String]()
-    var enemyimages = ["enemy", "devil", "angry"]
-    var friendimages = ["friend1", "friend2", "friend3", "friend4"]
+    var enemyimages = ["enemy", "devil", "angry", "enemy4", "enemy5", "enemy6", "enemy7"]
+    var friendimages = ["friend1", "friend2", "friend3", "friend4", "friend5", "friend6", "friend7"]
     var friends = [String]()
     var enemies = [String]()
     @IBOutlet weak var tableView: UITableView!

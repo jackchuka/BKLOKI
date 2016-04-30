@@ -64,8 +64,6 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         
         var namearray = defaults.objectForKey("namearray") as! [String]
         namearray.append(newname)
-        var imagearray = defaults.objectForKey("imagearray") as! [String]
-        namearray.append("")
         defaults.setObject(namearray, forKey: "namearray")
         
     }

@@ -70,13 +70,14 @@ class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDe
                 
                 
                 //Sending notifications
-                if(self.defaults.objectForKey("correspondingname") != nil){
-                let devicenamearray = self.defaults.objectForKey("correspondingname") as! [String]
+                print(self.defaults.objectForKey("correspondingNames"))
+                if(self.defaults.objectForKey("correspondingNames") != nil){
+                let devicenamearray = self.defaults.objectForKey("correspondingNames") as! [String]
                 print(devicenamearray)
                 let x = devicenamearray.count
                 for i in 0...x-1{
                    // if(UUIDarray[i] == device.remotePeripheral.identifier.UUIDString){
-                        let name = self.defaults.objectForKey("correspondingname") as! [String]
+                        let name = self.defaults.objectForKey("correspondingNames") as! [String]
                         self.scheduleLocal(UIViewController(), name: name[i])
                     print("scheduling the notification")
                     //}
@@ -115,11 +116,11 @@ class SettingsViewController: UIViewController,BKCentralDelegate, BKPeripheralDe
             return
         }
         
-        sound.play()
+        //sound.play()
 
         
         let notification = UILocalNotification()
-        notification.fireDate = NSDate(timeIntervalSinceNow: 1) // wait for 5 seconds before notifying
+        notification.fireDate = NSDate(timeIntervalSinceNow: 5) // wait for 5 seconds before notifying
         notification.alertBody = name + " is approaching"
         notification.alertAction = "Run away?" // Displayed as "Slide to..."
         //notification.soundName = UILocalNotificationDefaultSoundName
