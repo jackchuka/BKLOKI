@@ -83,12 +83,13 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
         do {
             peripheral.delegate = self
             
-            //
+            
             let localName = UIDevice.currentDevice().identifierForVendor?.UUIDString
+            /*
             var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
             arrayofUUID.append(localName!)
             defaults.setObject(arrayofUUID, forKey: "arrayofUUID")
-            //
+            */
             
             
             let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID:  characteristicUUID, localName: localName)
