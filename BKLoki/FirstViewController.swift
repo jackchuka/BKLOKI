@@ -12,23 +12,26 @@ import CoreBluetooth
 
 class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDelegate {
     
-    private let peripheral = BKPeripheral()
     private let central = BKCentral()
+    private let peripheral = BKPeripheral()
     private var discoveries = [BKDiscovery]()
     
     let serviceUUID = NSUUID(UUIDString: "470275F0-EF0A-4A20-9CEF-D160A4C25BF9")!
     let characteristicUUID = NSUUID(UUIDString: "E9CF5BAD-8D47-4C2E-A3D6-620115807AAD")!
-
-
-    override func viewDidLoad() {
+    
+    
+    internal override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.initPeripheral()
         self.initCentral()
+        self.initPeripheral()
         
     }
     
     internal override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        print("appear")
         scan()
     }
     
@@ -47,18 +50,18 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
             }
             self.discoveries = discoveries
             }, stateHandler: { newState in
-                //print(self.central.configuration?.dataServiceCharacteristicUUID)
                 if newState == .Scanning {
                     print("scanning")
                     return
                 } else if newState == .Stopped {
+                    self.discoveries.removeAll()
                     print("stopped")
                 }
             }, errorHandler: { error in
                 // Handle error.
                 print(error)
         })
-
+        
     }
     
     func initCentral() {
@@ -72,7 +75,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
             
         } catch let error {
             // Handle error.
-            print("Central init failed")
+            print("Central init failed \(error)")
         }
     }
     
@@ -88,7 +91,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
             
         } catch let error {
             // Handle error.
-            print("Peripheral init failed")
+            print("Peripheral init failed \(error)")
         }
     }
     
@@ -96,7 +99,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
         let data = "Hello beloved central!".dataUsingEncoding(NSUTF8StringEncoding)
         print("discovered devices: \(discoveries.count)")
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -107,7 +110,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
         print("Remote peripheral did disconnect: \(remotePeripheral)")
         self.navigationController?.popToViewController(self, animated: true)
     }
-
+    
     
     
     internal func peripheral(peripheral: BKPeripheral, remoteCentralDidConnect remoteCentral: BKRemoteCentral) {
@@ -119,6 +122,6 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
     }
     
     
-
+    
 }
 
