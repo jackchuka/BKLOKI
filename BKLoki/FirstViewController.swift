@@ -16,8 +16,8 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     private let peripheral = BKPeripheral()
     private var discoveries = [BKDiscovery]()
     
-    private let discoveriesTableView = UITableView()
     
+    @IBOutlet weak var tableView: UITableView!
     let defaults = NSUserDefaults.standardUserDefaults()
     let serviceUUID = NSUUID(UUIDString: "470275F0-EF0A-4A20-9CEF-D160A4C25BF9")!
     let characteristicUUID = NSUUID(UUIDString: "E9CF5BAD-8D47-4C2E-A3D6-620115807AAD")!
@@ -27,7 +27,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         self.initCentral()
         self.initPeripheral()
-        
+        tableView.delegate = self
     }
     
     internal override func viewDidAppear(animated: Bool) {
@@ -54,10 +54,10 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.discoveries = discoveries
             let indexPathsToInsert = changes.filter({ $0 == .Insert(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
             if !indexPathsToRemove.isEmpty {
-                self.discoveriesTableView.deleteRowsAtIndexPaths(indexPathsToRemove, withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.tableView.deleteRowsAtIndexPaths(indexPathsToRemove, withRowAnimation: UITableViewRowAnimation.Automatic)
             }
             if !indexPathsToInsert.isEmpty {
-                self.discoveriesTableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
+                self.tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
             }
             }, stateHandler: { newState in
                 if newState == .Scanning {
@@ -120,10 +120,20 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
+        
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
+        }
         let discovery = discoveries[indexPath.row]
+
         cell.textLabel?.text = discovery.localName != nil ? discovery.localName : discovery.remotePeripheral.name
+       // cell.accessoryType = .None
+        
+        
+        
         return cell
+        
     }
     
     
