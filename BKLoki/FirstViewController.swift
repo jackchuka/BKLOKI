@@ -20,7 +20,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var tableView: UITableView!
     let defaults = NSUserDefaults.standardUserDefaults()
     let serviceUUID = NSUUID(UUIDString: "470275F0-EF0A-4A20-9CEF-D160A4C25BF9")!
-    let characteristicUUID = NSUUID(UUIDString: (UIDevice.currentDevice().identifierForVendor?.UUIDString)!)!
+    let characteristicUUID = NSUUID(UUIDString: "E9CF5BAD-8D47-4C2E-A3D6-620115807AAD")!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +58,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
                 self.tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
             }
             for device in discoveries {
+                print("-----------------------------")
                 print("\(device.localName): \(device.remotePeripheral.identifier.UUIDString)")
             }
             }, stateHandler: { newState in
@@ -118,7 +119,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return discoveries.count
+        return discoveries.count + 1
     }
     
     internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -127,10 +128,17 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
         }
+        
+        if (indexPath.row == discoveries.count) {
+            cell.textLabel?.text = "MY UUID: \(UIDevice.currentDevice().identifierForVendor?.UUIDString)"
+            cell.accessoryType = .None
+            return cell
+        }
+        
         let discovery = discoveries[indexPath.row]
 
         cell.textLabel?.text = discovery.localName != nil ? discovery.localName : discovery.remotePeripheral.name
-       cell.accessoryType = .None
+        cell.accessoryType = .None
         
         
         
