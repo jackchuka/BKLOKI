@@ -56,15 +56,18 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             if !indexPathsToRemove.isEmpty {
                 self.tableView.deleteRowsAtIndexPaths(indexPathsToRemove, withRowAnimation: UITableViewRowAnimation.Automatic)
             }
+            
             if !indexPathsToInsert.isEmpty {
                 self.tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
             }
+            
             }, stateHandler: { newState in
                 if newState == .Scanning {
                     print("scanning")
                     return
                 } else if newState == .Stopped {
                     self.discoveries.removeAll()
+                    self.tableView.reloadData()
                     print("stopped")
                 }
             }, errorHandler: { error in
@@ -128,14 +131,21 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         let discovery = discoveries[indexPath.row]
 
         cell.textLabel?.text = discovery.localName != nil ? discovery.localName : discovery.remotePeripheral.name
-       // cell.accessoryType = .None
+       cell.accessoryType = .None
         
         
         
         return cell
         
     }
-    
+    internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var cell = self.tableView.dequeueReusableCellWithIdentifier("cell") as UITableViewCell!
+        
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "cell")
+        }
+        cell.accessoryType = .Checkmark
+    }
     
     @IBAction func btnSendPressed(sender: AnyObject) {
         let data = "Hello beloved central!".dataUsingEncoding(NSUTF8StringEncoding)
@@ -162,7 +172,9 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     internal func peripheral(peripheral: BKPeripheral, remoteCentralDidDisconnect remoteCentral: BKRemoteCentral) {
         print("Remote central did disconnect: \(remoteCentral)")
     }
-    
+    @IBAction func unwindToMap(segue: UIStoryboardSegue) {
+    }
+
 
 }
 

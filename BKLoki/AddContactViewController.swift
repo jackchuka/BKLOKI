@@ -11,7 +11,9 @@ import UIKit
 class AddContactViewController: UIViewController, UITextFieldDelegate {
     let defaults = NSUserDefaults.standardUserDefaults()
     @IBOutlet weak var textField: TitledTextField!
+    @IBOutlet weak var UUIDfield: TitledTextField!
     var newname: String!
+    var UUID: String!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,11 +28,13 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     }
     func textFieldDidEndEditing(textField: UITextField) {
         newname = textField.text
+        UUID = UUIDfield.text
         var namearray = defaults.objectForKey("namearray") as! [String]
         namearray.append(newname)
         var imagearray = defaults.objectForKey("imagearray") as! [String]
         namearray.append("")
         defaults.setObject(namearray, forKey: "namearray")
+        
     }
    
 
