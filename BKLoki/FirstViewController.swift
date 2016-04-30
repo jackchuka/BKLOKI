@@ -10,7 +10,7 @@ import UIKit
 import BluetoothKit
 import CoreBluetooth
 
-class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDelegate {
+class FirstViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, BKCentralDelegate, BKPeripheralDelegate {
     
     private let central = BKCentral()
     private let peripheral = BKPeripheral()
@@ -85,9 +85,9 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
             
             //
             let localName = UIDevice.currentDevice().identifierForVendor?.UUIDString
-            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
-            arrayofUUID.append(localName!)
-            defaults.setObject(arrayofUUID, forKey: "arrayofUUID")
+//            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
+//            arrayofUUID.append(localName!)
+//            defaults.setObject(arrayofUUID, forKey: "arrayofUUID")
             //
             
             
@@ -102,6 +102,19 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
             print("Peripheral init failed \(error)")
         }
     }
+    
+    
+    internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return discoveries.count
+    }
+    
+    internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        let discovery = discoveries[indexPath.row]
+        cell.textLabel?.text = discovery.localName != nil ? discovery.localName : discovery.remotePeripheral.name
+        return cell
+    }
+    
     
     @IBAction func btnSendPressed(sender: AnyObject) {
         let data = "Hello beloved central!".dataUsingEncoding(NSUTF8StringEncoding)
