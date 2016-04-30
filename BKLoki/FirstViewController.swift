@@ -16,6 +16,7 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
     private let peripheral = BKPeripheral()
     private var discoveries = [BKDiscovery]()
     
+    let defaults = NSUserDefaults.standardUserDefaults()
     let serviceUUID = NSUUID(UUIDString: "470275F0-EF0A-4A20-9CEF-D160A4C25BF9")!
     let characteristicUUID = NSUUID(UUIDString: "E9CF5BAD-8D47-4C2E-A3D6-620115807AAD")!
     
@@ -81,12 +82,20 @@ class FirstViewController: UIViewController, BKCentralDelegate, BKPeripheralDele
     func initPeripheral() {
         do {
             peripheral.delegate = self
+            
+            //
             let localName = UIDevice.currentDevice().identifierForVendor?.UUIDString
+            var arrayofUUID = defaults.objectForKey("arrayofUUID") as! [String]
+            arrayofUUID.append(localName!)
+            defaults.setObject(arrayofUUID, forKey: "arrayofUUID")
+            //
+            
+            
             let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID:  characteristicUUID, localName: localName)
             try peripheral.startWithConfiguration(configuration)
             // You are now ready for incoming connections
             
-            print("init peripheral")
+            print("Initialized peripheral")
             
         } catch let error {
             // Handle error.
