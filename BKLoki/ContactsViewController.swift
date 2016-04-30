@@ -47,7 +47,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 2
@@ -69,19 +69,26 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
         }
     }
     
+    func randRange (lower: Int , upper: Int) -> Int {
+        return lower + Int(arc4random_uniform(UInt32(upper - lower + 1)))
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell : ContactCell = tableView.dequeueReusableCellWithIdentifier("cell") as! ContactCell
         // Configure the cell...
         
+        
         if(indexPath.section == 0){
+            let rand = randRange(0, upper: friendimages.count-1)
             cell.name.text = friends[indexPath.row]
-            cell.imageofcell?.image = UIImage(named: friendimages[indexPath.row])
+            cell.imageofcell?.image = UIImage(named: friendimages[rand])
         }else{
+            let rand = randRange(0, upper: enemyimages.count-1)
             cell.name.text = enemies[indexPath.row]
-            cell.imageofcell.image = UIImage(named:enemyimages[indexPath.row])
+            cell.imageofcell.image = UIImage(named:enemyimages[rand])
         }
         return cell
-
+        
         
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
