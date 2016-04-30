@@ -148,6 +148,10 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if(defaults.objectForKey("UUID") == nil){
             defaults.setObject([localName], forKey: "UUID")
+        }else{
+            let arr = defaults.objectForKey("UUID")
+            arr?.appendString(localName)
+            defaults.setObject(arr, forKey: "UUID")
         }
         self.performSegueWithIdentifier("add", sender: self)
     }
