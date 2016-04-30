@@ -160,6 +160,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="friendorenemy" destination="PKB-Q6-Pe1" id="JdK-MY-Gdn"/>
                         <outlet property="textField" destination="IZv-Fj-vx4" id="FqN-1V-Q4b"/>
                     </connections>
                 </viewController>
