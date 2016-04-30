@@ -47,9 +47,6 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             // Handle changes to "availabile" discoveries, [BKDiscoveriesChange].
             // Handle current "available" discoveries, [BKDiscovery].
             // This is where you'd ie. update a table view.
-            for device in discoveries {
-                print(device.localName)
-            }
             let indexPathsToRemove = changes.filter({ $0 == .Remove(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
             self.discoveries = discoveries
             let indexPathsToInsert = changes.filter({ $0 == .Insert(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
