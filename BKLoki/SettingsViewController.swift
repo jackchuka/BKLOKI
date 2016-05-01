@@ -17,7 +17,7 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
 
     @IBOutlet weak var microsoftsigninbutton: UIButton!
     
-    private var localName = String!()
+    private var localName: String!
     var player : AVAudioPlayer! = nil // will be Optional, must supply initializer
 
     
@@ -36,7 +36,6 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
     }
     
     func callNotification(discoveries: [BKDiscovery]) {
-        print("notification method")
         for device in discoveries {
             //Sending notifications
             let name = (device.localName != nil) ? device.localName! : "Unknown"

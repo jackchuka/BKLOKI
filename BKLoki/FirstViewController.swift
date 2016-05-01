@@ -10,7 +10,7 @@ import UIKit
 import BluetoothKit
 import CoreBluetooth
 
-class FirstViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, BKCentralDelegate, BKPeripheralDelegate {
+class FirstViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, BKRemotePeripheralDelegate, BKCentralDelegate, BKPeripheralDelegate {
     
     private let central = BKCentral()
     private let peripheral = BKPeripheral()
@@ -41,6 +41,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     internal override func viewWillDisappear(animated: Bool) {
         //central.interrupScan()
     }
+    
     
     func scan() {
         
@@ -109,10 +110,9 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             peripheral.delegate = self
             
             localName = UIDevice.currentDevice().name
-            print(localName)
             UUID = UIDevice.currentDevice().identifierForVendor!.UUIDString
             
-            let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID:  characteristicUUID, localName: localName)
+            let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID: characteristicUUID, localName: localName)
             try peripheral.startWithConfiguration(configuration)
             // You are now ready for incoming connections
             
@@ -123,7 +123,6 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             print("Peripheral init failed \(error)")
         }
     }
-    
     
     internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return discoveries.count + 1
@@ -193,9 +192,18 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     internal func peripheral(peripheral: BKPeripheral, remoteCentralDidDisconnect remoteCentral: BKRemoteCentral) {
         print("Remote central did disconnect: \(remoteCentral)")
     }
-    @IBAction func unwindToMap(segue: UIStoryboardSegue) {
-    }
    
+    
+    // MARK: BKRemotePeripheralDelegate
+    internal func remotePeripheral(remotePeripheral: BKRemotePeripheral, didUpdateName name: String) {
+        navigationItem.title = name
+        print("Name change: \(name)")
+    }
+    
+    internal func remotePeripheral(remotePeripheral: BKRemotePeripheral, didSendArbitraryData data: NSData) {
+        print("Received data of length: \(data.length) with hash: \(data)")
+    }
+    
 
 }
 
