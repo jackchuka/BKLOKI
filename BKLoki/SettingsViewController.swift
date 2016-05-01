@@ -48,6 +48,7 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
                 print(devicenamearray)
                 let x = devicenamearray.count
                 for i in 0...x-1{
+                    
                     // if(UUIDarray[i] == device.remotePeripheral.identifier.UUIDString){
                     let name = self.defaults.objectForKey("correspondingNames") as! [String]
                     self.scheduleLocal(UIViewController(), name: name[i])
@@ -67,6 +68,18 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
     func scheduleLocal(sender: AnyObject, name: String) {
         guard let settings = UIApplication.sharedApplication().currentUserNotificationSettings() else { return }
         
+        if(UIApplication.sharedApplication().applicationState == UIApplicationState.Active){
+            let alertController = UIAlertController(title: name.uppercaseString + " is approaching you", message: "Do you want to see what your choice are?", preferredStyle: .Alert)
+            let acceptAction = UIAlertAction(title: "Yes", style: .Default) { (_) -> Void in
+                self.performSegueWithIdentifier("boxes", sender: self)
+            }
+            alertController.addAction(acceptAction)
+            alertController.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
+            UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
+
+        }
+        
+        
         // if notification failed to initialize
         if settings.types == .None {
             let ac = UIAlertController(title: "Can't schedule", message: "Either we don't have permission to schedule notifications, or we haven't asked yet.", preferredStyle: .Alert)
@@ -75,6 +88,7 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
             return
         }
         
+        //play the music
         let path = NSBundle.mainBundle().pathForResource("answercellphone", ofType:"wav")
         let fileURL = NSURL(fileURLWithPath: path!)
         do {
@@ -86,12 +100,12 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
         player.delegate = self
         player.play()
         
+        //notification of who is nearby
         let notification = UILocalNotification()
         notification.fireDate = NSDate(timeIntervalSinceNow: 5) // wait for 5 seconds before notifying
         notification.alertBody = name + " is approaching"
         notification.alertAction = "Run away?" // Displayed as "Slide to..."
-        //notification.soundName = UILocalNotificationDefaultSoundName
-        //notification.userInfo = ["CustomField1": "Sara-Max"]
+        notification.soundName = UILocalNotificationDefaultSoundName
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }
     

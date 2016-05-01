@@ -26,6 +26,9 @@
 		81EDD7DF1CD5443D00E4795C /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD7DE1CD5443D00E4795C /* SwiftyJSON.swift */; };
 		81EDD8041CD561AF00E4795C /* answercellphone.wav in Resources */ = {isa = PBXBuildFile; fileRef = 81EDD8031CD561AE00E4795C /* answercellphone.wav */; };
 		81EDD8061CD571FD00E4795C /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD8051CD571FD00E4795C /* AuthenticationManager.swift */; };
+		81EDD80B1CD5828A00E4795C /* BoxesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD80A1CD5828A00E4795C /* BoxesViewController.swift */; };
+		81EDD80D1CD5833600E4795C /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD80C1CD5833600E4795C /* Box.swift */; };
+		81EDD80F1CD583A400E4795C /* Box.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81EDD80E1CD583A400E4795C /* Box.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		81EDD7DE1CD5443D00E4795C /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		81EDD8031CD561AE00E4795C /* answercellphone.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = answercellphone.wav; sourceTree = "<group>"; };
 		81EDD8051CD571FD00E4795C /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		81EDD80A1CD5828A00E4795C /* BoxesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxesViewController.swift; sourceTree = "<group>"; };
+		81EDD80C1CD5833600E4795C /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
+		81EDD80E1CD583A400E4795C /* Box.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Box.xib; sourceTree = "<group>"; };
 		D5CDA40D067318D484A8398E /* Pods-BKLoki.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BKLoki.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BKLoki/Pods-BKLoki.debug.xcconfig"; sourceTree = "<group>"; };
 		E8DF28AD2E9022D27E73499F /* Pods_BKLoki.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BKLoki.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -96,6 +102,9 @@
 		15EAB54E1CD4B20400916415 /* BKLoki */ = {
 			isa = PBXGroup;
 			children = (
+				81EDD80A1CD5828A00E4795C /* BoxesViewController.swift */,
+				81EDD80E1CD583A400E4795C /* Box.xib */,
+				81EDD80C1CD5833600E4795C /* Box.swift */,
 				15EAB54F1CD4B20400916415 /* AppDelegate.swift */,
 				15EAB5511CD4B20400916415 /* FirstViewController.swift */,
 				81EDD7D21CD5287400E4795C /* SettingsViewController.swift */,
@@ -208,6 +217,7 @@
 				81EDD7CF1CD4F05100E4795C /* ContactCell.xib in Resources */,
 				81EDD8041CD561AF00E4795C /* answercellphone.wav in Resources */,
 				81EDD7D91CD53A8600E4795C /* Mail.html in Resources */,
+				81EDD80F1CD583A400E4795C /* Box.xib in Resources */,
 				81EDD7DD1CD53AB500E4795C /* EmailPostContent.json in Resources */,
 				81EDD7D71CD53A8000E4795C /* EmailBody.html in Resources */,
 				15EAB55C1CD4B20400916415 /* LaunchScreen.storyboard in Resources */,
@@ -272,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81EDD7D11CD4F0C400E4795C /* ContactCell.swift in Sources */,
+				81EDD80B1CD5828A00E4795C /* BoxesViewController.swift in Sources */,
 				81EDD7CD1CD4EDD700E4795C /* AddContactViewController.swift in Sources */,
 				81EDD7D31CD5287400E4795C /* SettingsViewController.swift in Sources */,
 				81EDD8061CD571FD00E4795C /* AuthenticationManager.swift in Sources */,
@@ -279,6 +290,7 @@
 				15EAB5501CD4B20400916415 /* AppDelegate.swift in Sources */,
 				81EDD7DB1CD53AA300E4795C /* AuthenticationConstants.swift in Sources */,
 				81EDD7DF1CD5443D00E4795C /* SwiftyJSON.swift in Sources */,
+				81EDD80D1CD5833600E4795C /* Box.swift in Sources */,
 				15EAB5521CD4B20400916415 /* FirstViewController.swift in Sources */,
 				81EDD7CB1CD4EDBD00E4795C /* TitledTextField.swift in Sources */,
 			);
