@@ -30,6 +30,7 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func addNew(sender: AnyObject) {
+        print("Adding new friend/enemy")
         newname = textField.text
         
         //friend or enemy
@@ -39,23 +40,22 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
                 var booleanarray = defaults.objectForKey("friend") as! [String]
                 booleanarray.append(newname)
                 defaults.setObject(booleanarray, forKey: "friend")
-            }else{
+            } else {
                 defaults.setObject([newname], forKey: "friend")
             }
         }else{
-            if(defaults.objectForKey("enemy") != nil){
+            if defaults.objectForKey("enemy") != nil {
                 var booleanarray = defaults.objectForKey("enemy") as! [String]
                 booleanarray.append(newname)
                 defaults.setObject(booleanarray, forKey: "enemy")
-            }
-            else{
+            } else {
                 defaults.setObject([newname], forKey: "enemy")
             }
         }
         
-        var namearray = defaults.objectForKey("namearray") as! [String]
-        namearray.append(newname)
-        defaults.setObject(namearray, forKey: "namearray")
+        if let navController = self.navigationController {
+            navController.popViewControllerAnimated(true)
+        }
     }
 
 }

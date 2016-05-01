@@ -13,7 +13,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     
     let defaults = NSUserDefaults.standardUserDefaults()
     private let central = BKCentral()
-    var users = [String]()
     
     var enemyimages = ["enemy", "devil", "angry", "enemy4", "enemy5", "enemy6"]
     var friendimages = ["friend1", "friend2", "friend3", "friend4", "friend5", "friend6"]
@@ -32,9 +31,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
         tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "ContactCell", bundle: nil), forCellReuseIdentifier: "cell")
         
-        users = (defaults.objectForKey("namearray") != nil) ? defaults.objectForKey("namearray") as! [String] : [String]()
-        enemies = (defaults.objectForKey("enemy") != nil) ? defaults.objectForKey("enemy") as! [String] : [String]()
-        friends = (defaults.objectForKey("friend") != nil) ? defaults.objectForKey("friend") as! [String] : [String]()
         self.tableView.reloadData()
     }
     
@@ -44,6 +40,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
+        enemies = (defaults.objectForKey("enemy") != nil) ? defaults.objectForKey("enemy") as! [String] : [String]()
+        friends = (defaults.objectForKey("friend") != nil) ? defaults.objectForKey("friend") as! [String] : [String]()
+        print("\(friends)")
+        print("\(enemies)")
         tableView.reloadData()
     }
     
