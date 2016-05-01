@@ -44,17 +44,8 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
             //Sending notifications
             print(self.defaults.objectForKey("correspondingNames"))
             if(self.defaults.objectForKey("correspondingNames") != nil){
-                let devicenamearray = self.defaults.objectForKey("correspondingNames") as! [String]
-                print(devicenamearray)
-                let x = devicenamearray.count
-                for i in 0...x-1{
-                    
-                    // if(UUIDarray[i] == device.remotePeripheral.identifier.UUIDString){
-                    let name = self.defaults.objectForKey("correspondingNames") as! [String]
-                    self.scheduleLocal(UIViewController(), name: name[i])
-                    print("scheduling the notification")
-                //}
-                }
+                self.scheduleLocal(UIViewController(), name: device.localName!)
+                print("scheduling the notification")
             }
         }
     
