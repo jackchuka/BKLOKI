@@ -29,6 +29,7 @@
 		81EDD80B1CD5828A00E4795C /* BoxesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD80A1CD5828A00E4795C /* BoxesViewController.swift */; };
 		81EDD80D1CD5833600E4795C /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD80C1CD5833600E4795C /* Box.swift */; };
 		81EDD80F1CD583A400E4795C /* Box.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81EDD80E1CD583A400E4795C /* Box.xib */; };
+		81EDD8111CD59B0D00E4795C /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81EDD8101CD59B0D00E4795C /* PhotosViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		81EDD80A1CD5828A00E4795C /* BoxesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxesViewController.swift; sourceTree = "<group>"; };
 		81EDD80C1CD5833600E4795C /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		81EDD80E1CD583A400E4795C /* Box.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Box.xib; sourceTree = "<group>"; };
+		81EDD8101CD59B0D00E4795C /* PhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		D5CDA40D067318D484A8398E /* Pods-BKLoki.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BKLoki.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BKLoki/Pods-BKLoki.debug.xcconfig"; sourceTree = "<group>"; };
 		E8DF28AD2E9022D27E73499F /* Pods_BKLoki.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BKLoki.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -111,6 +113,7 @@
 				15EAB5531CD4B20400916415 /* ContactsViewController.swift */,
 				81EDD7CC1CD4EDD700E4795C /* AddContactViewController.swift */,
 				15EAB5551CD4B20400916415 /* Main.storyboard */,
+				81EDD8101CD59B0D00E4795C /* PhotosViewController.swift */,
 				81EDD7CE1CD4F05100E4795C /* ContactCell.xib */,
 				81EDD7D01CD4F0C400E4795C /* ContactCell.swift */,
 				81EDD7CA1CD4EDBD00E4795C /* TitledTextField.swift */,
@@ -282,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81EDD7D11CD4F0C400E4795C /* ContactCell.swift in Sources */,
+				81EDD8111CD59B0D00E4795C /* PhotosViewController.swift in Sources */,
 				81EDD80B1CD5828A00E4795C /* BoxesViewController.swift in Sources */,
 				81EDD7CD1CD4EDD700E4795C /* AddContactViewController.swift in Sources */,
 				81EDD7D31CD5287400E4795C /* SettingsViewController.swift in Sources */,

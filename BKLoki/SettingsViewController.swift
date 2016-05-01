@@ -71,13 +71,15 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
         if(UIApplication.sharedApplication().applicationState == UIApplicationState.Active){
             let alertController = UIAlertController(title: name.uppercaseString + " is approaching you", message: "Do you want to see what your choice are?", preferredStyle: .Alert)
             let acceptAction = UIAlertAction(title: "Yes", style: .Default) { (_) -> Void in
-                self.performSegueWithIdentifier("boxes", sender: self)
+                self.performSegueWithIdentifier("showit", sender: self)
+                //let boxVC = BoxesViewController();
+                //self.navigationController?.pushViewController(boxVC, animated: true);
             }
             alertController.addAction(acceptAction)
             alertController.addAction(UIAlertAction(title: "No", style: .Cancel, handler: nil))
             UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(alertController, animated: true, completion: nil)
 
-        }
+        }else{
         
         
         // if notification failed to initialize
@@ -107,6 +109,7 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
         notification.alertAction = "Run away?" // Displayed as "Slide to..."
         notification.soundName = UILocalNotificationDefaultSoundName
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
+        }
     }
     
     override func didReceiveMemoryWarning() {
