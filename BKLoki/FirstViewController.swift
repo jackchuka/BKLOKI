@@ -33,8 +33,6 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     internal override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        print("appear")
         scan()
     }
     
@@ -60,8 +58,6 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             var incoming = [BKDiscovery]()
             var outgoing = [BKDiscovery]()
             for device in discoveries {
-                print("-----------------------------")
-                print("device name: \(device.localName)")
                 if !past.contains(device) {
                     incoming.append(device)
                 }
@@ -76,12 +72,10 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             
             }, stateHandler: { newState in
                 if newState == .Scanning {
-                    print("scanning")
                     return
                 } else if newState == .Stopped {
                     self.discoveries.removeAll()
                     self.tableView.reloadData()
-                    print("stopped")
                 }
             }, errorHandler: { error in
                 // Handle error.
@@ -153,8 +147,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.row != discoveries.count) {
             central.connect(remotePeripheral: discoveries[indexPath.row].remotePeripheral) { remotePeripheral, error in
-                // Handle error.
-                // If no error, you're ready to receive data!
+                print("remote: \(remotePeripheral.identifier)")
             }
             
             for remoteCentral in peripheral.connectedRemoteCentrals {
@@ -196,7 +189,6 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     // MARK: BKRemotePeripheralDelegate
     internal func remotePeripheral(remotePeripheral: BKRemotePeripheral, didUpdateName name: String) {
-        navigationItem.title = name
         print("Name change: \(name)")
     }
     
