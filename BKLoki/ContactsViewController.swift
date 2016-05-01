@@ -28,20 +28,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
         
         tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "ContactCell", bundle: nil), forCellReuseIdentifier: "cell")
-        if(defaults.objectForKey("namearray") == nil){
-            users = ["Charlotte", "Billy", "Charlie", "Sammy"]
-            defaults.setObject(users, forKey: "namearray")
-        }
-        if(defaults.objectForKey("enemy") == nil){
-            enemies = ["Charlotte", "Charlie"]
-            defaults.setObject(enemies, forKey: "enemy")
-            
-        }
-        if(defaults.objectForKey("friend") == nil){
-            friends = ["Billy", "Sammy"]
-            defaults.setObject(friends, forKey: "friend")
-            
-        }
+        
         users = defaults.objectForKey("namearray") as! [String]
         enemies = defaults.objectForKey("enemy") as! [String]
         friends = defaults.objectForKey("friend") as! [String]
@@ -89,8 +76,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell : ContactCell = tableView.dequeueReusableCellWithIdentifier("cell") as! ContactCell
-        // Configure the cell...
-        
         
         if(indexPath.section == 0){
             let rand = randRange(0, upper: friendimages.count-1)

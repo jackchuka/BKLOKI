@@ -29,17 +29,8 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    @IBAction func addNew(sender: AnyObject) {
         newname = textField.text
-        
-        //corresponding names to UUIDs
-        if(defaults.objectForKey("correspondingNames") == nil){
-            defaults.setObject([newname], forKey: "correspondingNames")
-        }else{
-            var arr = defaults.arrayForKey("correspondingNames")
-            arr?.append(newname)
-            defaults.setObject(arr, forKey: "correspondingNames")
-        }
         
         //friend or enemy
         friend = friendorenemy.text
@@ -62,12 +53,9 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        
         var namearray = defaults.objectForKey("namearray") as! [String]
         namearray.append(newname)
         defaults.setObject(namearray, forKey: "namearray")
-        
     }
-   
 
 }
