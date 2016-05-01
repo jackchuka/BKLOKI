@@ -45,24 +45,34 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     func scan() {
         
         central.scanContinuouslyWithChangeHandler({ changes, discoveries in
-            // Handle changes to "availabile" discoveries, [BKDiscoveriesChange].
-            // Handle current "available" discoveries, [BKDiscovery].
-            // This is where you'd ie. update a table view.
+            
             let indexPathsToRemove = changes.filter({ $0 == .Remove(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
+            let past = self.discoveries
             self.discoveries = discoveries
             let indexPathsToInsert = changes.filter({ $0 == .Insert(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
             if !indexPathsToRemove.isEmpty {
                 self.tableView.deleteRowsAtIndexPaths(indexPathsToRemove, withRowAnimation: UITableViewRowAnimation.Automatic)
             }
-            
             if !indexPathsToInsert.isEmpty {
                 self.tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
             }
-            SettingsViewController().callNotification(discoveries)
+            var incoming = [BKDiscovery]()
+            var outgoing = [BKDiscovery]()
             for device in discoveries {
                 print("-----------------------------")
                 print("device name: \(device.localName)")
+                if !past.contains(device) {
+                    incoming.append(device)
+                }
             }
+            for device in past {
+                if !discoveries.contains(device) {
+                    outgoing.append(device)
+                }
+            }
+            SettingsViewController().callNotification(incoming)
+            SettingsViewController().callNotification(outgoing)
+            
             }, stateHandler: { newState in
                 if newState == .Scanning {
                     print("scanning")
@@ -148,11 +158,15 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
                 // If no error, you're ready to receive data!
             }
             
-            if let remoteCentral = peripheral.connectedRemoteCentrals.first {
+            for remoteCentral in peripheral.connectedRemoteCentrals {
                 let data = "Hello beloved central!".dataUsingEncoding(NSUTF8StringEncoding)
+                print("Sending to \(remoteCentral)")
                 peripheral.sendData(data!, toRemoteCentral: remoteCentral) { data, remoteCentral, error in
-                    // Handle error.
-                    // If no error, the data was all sent!
+                    guard error == nil else {
+                        print("Failed sending to \(remoteCentral)")
+                        return
+                    }
+                    print("Sent to \(remoteCentral)")
                 }
             }
             self.performSegueWithIdentifier("add", sender: self)
