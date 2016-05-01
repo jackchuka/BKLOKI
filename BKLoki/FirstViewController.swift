@@ -61,7 +61,7 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             SettingsViewController().callNotification(discoveries)
             for device in discoveries {
                 print("-----------------------------")
-                print("\(device.localName): \(device.remotePeripheral.identifier.UUIDString)")
+                print("device name: \(device.localName)")
             }
             }, stateHandler: { newState in
                 if newState == .Scanning {
@@ -143,6 +143,18 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.row != discoveries.count) {
+            central.connect(remotePeripheral: discoveries[indexPath.row].remotePeripheral) { remotePeripheral, error in
+                // Handle error.
+                // If no error, you're ready to receive data!
+            }
+            
+            if let remoteCentral = peripheral.connectedRemoteCentrals.first {
+                let data = "Hello beloved central!".dataUsingEncoding(NSUTF8StringEncoding)
+                peripheral.sendData(data!, toRemoteCentral: remoteCentral) { data, remoteCentral, error in
+                    // Handle error.
+                    // If no error, the data was all sent!
+                }
+            }
             self.performSegueWithIdentifier("add", sender: self)
         }
     }
