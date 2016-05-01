@@ -17,7 +17,7 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
 
     @IBOutlet weak var microsoftsigninbutton: UIButton!
     
-    private var localName = String!()
+    private var localName: String!
     var player : AVAudioPlayer! = nil // will be Optional, must supply initializer
 
     
@@ -36,26 +36,11 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
     }
     
     func callNotification(discoveries: [BKDiscovery]) {
-        print("notification method")
         for device in discoveries {
-            print("-----------------------------")
-            print("\(device.localName): \(device.remotePeripheral.identifier.UUIDString)")
-
             //Sending notifications
-            print(self.defaults.objectForKey("correspondingNames"))
-            if(self.defaults.objectForKey("correspondingNames") != nil){
-                let devicenamearray = self.defaults.objectForKey("correspondingNames") as! [String]
-                print(devicenamearray)
-                let x = devicenamearray.count
-                for i in 0...x-1{
-                    
-                    // if(UUIDarray[i] == device.remotePeripheral.identifier.UUIDString){
-                    let name = self.defaults.objectForKey("correspondingNames") as! [String]
-                    self.scheduleLocal(UIViewController(), name: name[i])
-                    print("scheduling the notification")
-                //}
-                }
-            }
+            let name = (device.localName != nil) ? device.localName! : "Unknown"
+            self.scheduleLocal(UIViewController(), name: name)
+            print("scheduling the notification")
         }
     
     }

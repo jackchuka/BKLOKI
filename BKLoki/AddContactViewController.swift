@@ -29,17 +29,9 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
+    @IBAction func addNew(sender: AnyObject) {
+        print("Adding new friend/enemy")
         newname = textField.text
-        
-        //corresponding names to UUIDs
-        if(defaults.objectForKey("correspondingNames") == nil){
-            defaults.setObject([newname], forKey: "correspondingNames")
-        }else{
-            var arr = defaults.arrayForKey("correspondingNames")
-            arr?.append(newname)
-            defaults.setObject(arr, forKey: "correspondingNames")
-        }
         
         //friend or enemy
         friend = friendorenemy.text
@@ -48,26 +40,22 @@ class AddContactViewController: UIViewController, UITextFieldDelegate {
                 var booleanarray = defaults.objectForKey("friend") as! [String]
                 booleanarray.append(newname)
                 defaults.setObject(booleanarray, forKey: "friend")
-            }else{
+            } else {
                 defaults.setObject([newname], forKey: "friend")
             }
         }else{
-            if(defaults.objectForKey("enemy") != nil){
+            if defaults.objectForKey("enemy") != nil {
                 var booleanarray = defaults.objectForKey("enemy") as! [String]
                 booleanarray.append(newname)
                 defaults.setObject(booleanarray, forKey: "enemy")
-            }
-            else{
+            } else {
                 defaults.setObject([newname], forKey: "enemy")
             }
         }
         
-        
-        var namearray = defaults.objectForKey("namearray") as! [String]
-        namearray.append(newname)
-        defaults.setObject(namearray, forKey: "namearray")
-        
+        if let navController = self.navigationController {
+            navController.popViewControllerAnimated(true)
+        }
     }
-   
 
 }

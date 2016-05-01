@@ -13,7 +13,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     
     let defaults = NSUserDefaults.standardUserDefaults()
     private let central = BKCentral()
-    var users = [String]()
     
     var enemyimages = ["enemy", "devil", "angry", "enemy4", "enemy5", "enemy6"]
     var friendimages = ["friend1", "friend2", "friend3", "friend4", "friend5", "friend6"]
@@ -26,25 +25,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // uncomment to clear data for testing!!
+        //self.clearDefaults()
+        
         tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "ContactCell", bundle: nil), forCellReuseIdentifier: "cell")
-        if(defaults.objectForKey("namearray") == nil){
-            users = ["Charlotte", "Billy", "Charlie", "Sammy"]
-            defaults.setObject(users, forKey: "namearray")
-        }
-        if(defaults.objectForKey("enemy") == nil){
-            enemies = ["Charlotte", "Charlie"]
-            defaults.setObject(enemies, forKey: "enemy")
-            
-        }
-        if(defaults.objectForKey("friend") == nil){
-            friends = ["Billy", "Sammy"]
-            defaults.setObject(friends, forKey: "friend")
-            
-        }
-        users = defaults.objectForKey("namearray") as! [String]
-        enemies = defaults.objectForKey("enemy") as! [String]
-        friends = defaults.objectForKey("friend") as! [String]
+        
         self.tableView.reloadData()
     }
     
@@ -54,21 +40,22 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
+        enemies = (defaults.objectForKey("enemy") != nil) ? defaults.objectForKey("enemy") as! [String] : [String]()
+        friends = (defaults.objectForKey("friend") != nil) ? defaults.objectForKey("friend") as! [String] : [String]()
+        print("\(friends)")
+        print("\(enemies)")
         tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         if(section == 0){
             return friends.count
         }else{
@@ -89,8 +76,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell : ContactCell = tableView.dequeueReusableCellWithIdentifier("cell") as! ContactCell
-        // Configure the cell...
-        
         
         if(indexPath.section == 0){
             let rand = randRange(0, upper: friendimages.count-1)

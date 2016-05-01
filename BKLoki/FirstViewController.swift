@@ -10,7 +10,7 @@ import UIKit
 import BluetoothKit
 import CoreBluetooth
 
-class FirstViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, BKCentralDelegate, BKPeripheralDelegate {
+class FirstViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, BKRemotePeripheralDelegate, BKCentralDelegate, BKPeripheralDelegate {
     
     private let central = BKCentral()
     private let peripheral = BKPeripheral()
@@ -33,8 +33,6 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     internal override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-        print("appear")
         scan()
     }
     
@@ -42,35 +40,42 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
         //central.interrupScan()
     }
     
+    
     func scan() {
         
         central.scanContinuouslyWithChangeHandler({ changes, discoveries in
-            // Handle changes to "availabile" discoveries, [BKDiscoveriesChange].
-            // Handle current "available" discoveries, [BKDiscovery].
-            // This is where you'd ie. update a table view.
+            
             let indexPathsToRemove = changes.filter({ $0 == .Remove(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
+            let past = self.discoveries
             self.discoveries = discoveries
             let indexPathsToInsert = changes.filter({ $0 == .Insert(discovery: nil) }).map({ NSIndexPath(forRow: self.discoveries.indexOf($0.discovery)!, inSection: 0) })
             if !indexPathsToRemove.isEmpty {
                 self.tableView.deleteRowsAtIndexPaths(indexPathsToRemove, withRowAnimation: UITableViewRowAnimation.Automatic)
             }
-            
             if !indexPathsToInsert.isEmpty {
                 self.tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Automatic)
             }
-            SettingsViewController().callNotification(discoveries)
+            var incoming = [BKDiscovery]()
+            var outgoing = [BKDiscovery]()
             for device in discoveries {
-                print("-----------------------------")
-                print("device name: \(device.localName)")
+                if !past.contains(device) {
+                    incoming.append(device)
+                }
             }
+            for device in past {
+                if !discoveries.contains(device) {
+                    outgoing.append(device)
+                }
+            }
+            SettingsViewController().callNotification(incoming)
+            SettingsViewController().callNotification(outgoing)
+            
             }, stateHandler: { newState in
                 if newState == .Scanning {
-                    print("scanning")
                     return
                 } else if newState == .Stopped {
                     self.discoveries.removeAll()
                     self.tableView.reloadData()
-                    print("stopped")
                 }
             }, errorHandler: { error in
                 // Handle error.
@@ -99,10 +104,9 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             peripheral.delegate = self
             
             localName = UIDevice.currentDevice().name
-            print(localName)
             UUID = UIDevice.currentDevice().identifierForVendor!.UUIDString
             
-            let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID:  characteristicUUID, localName: localName)
+            let configuration = BKPeripheralConfiguration(dataServiceUUID: serviceUUID, dataServiceCharacteristicUUID: characteristicUUID, localName: localName)
             try peripheral.startWithConfiguration(configuration)
             // You are now ready for incoming connections
             
@@ -113,7 +117,6 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
             print("Peripheral init failed \(error)")
         }
     }
-    
     
     internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return discoveries.count + 1
@@ -144,15 +147,18 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (indexPath.row != discoveries.count) {
             central.connect(remotePeripheral: discoveries[indexPath.row].remotePeripheral) { remotePeripheral, error in
-                // Handle error.
-                // If no error, you're ready to receive data!
+                print("remote: \(remotePeripheral.identifier)")
             }
             
-            if let remoteCentral = peripheral.connectedRemoteCentrals.first {
+            for remoteCentral in peripheral.connectedRemoteCentrals {
                 let data = "Hello beloved central!".dataUsingEncoding(NSUTF8StringEncoding)
+                print("Sending to \(remoteCentral)")
                 peripheral.sendData(data!, toRemoteCentral: remoteCentral) { data, remoteCentral, error in
-                    // Handle error.
-                    // If no error, the data was all sent!
+                    guard error == nil else {
+                        print("Failed sending to \(remoteCentral)")
+                        return
+                    }
+                    print("Sent to \(remoteCentral)")
                 }
             }
             self.performSegueWithIdentifier("add", sender: self)
@@ -179,9 +185,17 @@ class FirstViewController: UIViewController, UITableViewDataSource, UITableViewD
     internal func peripheral(peripheral: BKPeripheral, remoteCentralDidDisconnect remoteCentral: BKRemoteCentral) {
         print("Remote central did disconnect: \(remoteCentral)")
     }
-    @IBAction func unwindToMap(segue: UIStoryboardSegue) {
-    }
    
+    
+    // MARK: BKRemotePeripheralDelegate
+    internal func remotePeripheral(remotePeripheral: BKRemotePeripheral, didUpdateName name: String) {
+        print("Name change: \(name)")
+    }
+    
+    internal func remotePeripheral(remotePeripheral: BKRemotePeripheral, didSendArbitraryData data: NSData) {
+        print("Received data of length: \(data.length) with hash: \(data)")
+    }
+    
 
 }
 

@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -229,7 +228,7 @@
                     <navigationItem key="navigationItem" title="New Contact" id="MEQ-31-TWW">
                         <barButtonItem key="rightBarButtonItem" title="Done" id="EuI-eP-wCb">
                             <connections>
-                                <segue destination="MpL-Ui-2xz" kind="unwind" unwindAction="unwindToMap:" id="Nk9-Ju-IuK"/>
+                                <action selector="addNew:" destination="gru-XU-usL" id="HgP-eF-Bnv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -239,7 +238,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxy-8V-KhY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="MpL-Ui-2xz" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1737" y="-360"/>
         </scene>
@@ -337,8 +335,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUc-gz-ptt">
-                                                    <rect key="frame" x="25" y="7" width="129" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wUc-gz-ptt">
+                                                    <rect key="frame" x="25" y="7" width="257" height="30"/>
                                                     <state key="normal" title="Sign into Microsoft"/>
                                                     <connections>
                                                         <action selector="loginMicrosoft:" destination="Rwf-oP-hkI" eventType="touchUpInside" id="2Rg-D3-23b"/>
@@ -358,19 +356,23 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xj8-wd-43N">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xj8-wd-43N">
                                                     <rect key="frame" x="30" y="11" width="233" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="233" id="1Oe-J2-qQQ"/>
-                                                        <constraint firstAttribute="width" constant="128" id="boE-0s-kjX"/>
-                                                        <constraint firstAttribute="width" constant="128" id="hDY-sR-HKP"/>
+                                                        <constraint firstAttribute="width" constant="233" id="GOi-lx-0kU"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="28" y="11" width="49.5" height="21"/>
+                                                    </variation>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7FJ-sj-n0C">
                                                     <rect key="frame" x="543" y="6" width="51" height="31"/>
+                                                    <variation key="widthClass=compact" fixedFrame="YES">
+                                                        <rect key="frame" x="271" y="6" width="51" height="31"/>
+                                                    </variation>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -394,24 +396,6 @@
                                                 <constraint firstItem="Xj8-wd-43N" firstAttribute="leading" secondItem="fOW-9T-wwX" secondAttribute="leadingMargin" constant="20" id="nJi-Mu-XGq"/>
                                                 <constraint firstItem="Xj8-wd-43N" firstAttribute="centerY" secondItem="fOW-9T-wwX" secondAttribute="centerY" id="xlA-4K-wNt"/>
                                             </constraints>
-                                            <variation key="default">
-                                                <mask key="subviews">
-                                                    <exclude reference="Xj8-wd-43N"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="cRF-Zk-DtO"/>
-                                                    <exclude reference="xlA-4K-wNt"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="Xj8-wd-43N"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <include reference="cRF-Zk-DtO"/>
-                                                    <include reference="xlA-4K-wNt"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Qii-UJ-aZw">
