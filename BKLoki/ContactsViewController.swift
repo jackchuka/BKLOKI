@@ -26,12 +26,15 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // uncomment to clear data for testing!!
+        //self.clearDefaults()
+        
         tableView.delegate = self
         self.tableView.registerNib(UINib(nibName: "ContactCell", bundle: nil), forCellReuseIdentifier: "cell")
         
-        users = defaults.objectForKey("namearray") as! [String]
-        enemies = defaults.objectForKey("enemy") as! [String]
-        friends = defaults.objectForKey("friend") as! [String]
+        users = (defaults.objectForKey("namearray") != nil) ? defaults.objectForKey("namearray") as! [String] : [String]()
+        enemies = (defaults.objectForKey("enemy") != nil) ? defaults.objectForKey("enemy") as! [String] : [String]()
+        friends = (defaults.objectForKey("friend") != nil) ? defaults.objectForKey("friend") as! [String] : [String]()
         self.tableView.reloadData()
     }
     
@@ -46,16 +49,13 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         if(section == 0){
             return friends.count
         }else{

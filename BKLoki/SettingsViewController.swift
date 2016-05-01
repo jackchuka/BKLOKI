@@ -38,11 +38,9 @@ class SettingsViewController: UITableViewController, AVAudioPlayerDelegate  {
     func callNotification(discoveries: [BKDiscovery]) {
         print("notification method")
         for device in discoveries {
-            print("-----------------------------")
-            print("\(device.localName): \(device.remotePeripheral.identifier.UUIDString)")
-
             //Sending notifications
-            self.scheduleLocal(UIViewController(), name: device.localName!)
+            let name = (device.localName != nil) ? device.localName! : "Unknown"
+            self.scheduleLocal(UIViewController(), name: name)
             print("scheduling the notification")
         }
     
