@@ -11,6 +11,7 @@ import UIKit
 class ContactCell: UITableViewCell {
     @IBOutlet var imageofcell: UIImageView!
     @IBOutlet var name: UILabel!
+    @IBOutlet weak var descrip: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

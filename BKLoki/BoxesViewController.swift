@@ -14,15 +14,11 @@ class BoxesViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        print("I'm already in Boxes VC")
         self.collectionView!.registerNib(UINib(nibName: "Box", bundle: nil), forCellWithReuseIdentifier: "cell")
         self.collectionView!.backgroundColor = UIColor.whiteColor()
         //self.collectionView!.backgroundColor = UIColor(patternImage: UIImage(named:"clouds")!)
         
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = self.collectionView!.bounds
-        collectionView!.addSubview(blurView)
+  
         
     }
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

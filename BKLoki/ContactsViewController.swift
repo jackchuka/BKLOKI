@@ -81,11 +81,27 @@ class ContactsViewController: UIViewController, UITableViewDelegate {
             let rand = randRange(0, upper: friendimages.count-1)
             cell.name.text = friends[indexPath.row]
             cell.imageofcell?.image = UIImage(named: friendimages[rand])
+            
+            if(random() % 3 == 0){
+                cell.descrip.text = "is approaching you."
+            }else if(random() % 2 == 0){
+                cell.descrip.text = "is leaving your range, say goodbye!"
+            }else{
+                cell.descrip.text = "is very close, how about you say hi"
+            }
         }else{
             let rand = randRange(0, upper: enemyimages.count-1)
             cell.name.text = enemies[indexPath.row]
             cell.imageofcell.image = UIImage(named:enemyimages[rand])
+            if(random() % 3 == 0){
+                cell.descrip.text = "is approaching you; maybe you should run away"
+            }else if(random() % 2 == 0){
+                cell.descrip.text = "is leaving your range, you can calm down now"
+            }else{
+                cell.descrip.text = "is very close! Get away fast!"
+            }
         }
+        
         return cell
         
         

@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import AVFoundation
 
-class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, AVAudioPlayerDelegate {
+    var player : AVAudioPlayer! = nil // will be Optional, must supply initializer
+
     @IBOutlet weak var currentImage: UIImageView!
+    @IBOutlet weak var textView: UITextView!
     
     let imagePicker: UIImagePickerController! = UIImagePickerController()
     @IBAction func takePicture(sender: UIButton) {
@@ -26,6 +29,26 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
         } else {
             print("Camera inaccessable")
         }
+        
+        /*
+        let params = [
+            "func" : "timelineid",
+            "timeline_id" : self.timeline_id
+        ];
+        
+        Alamofire.request(.GET, url, parameters: params, encoding: ParameterEncoding.URL).responseJSON { (_, _, result) in
+            switch result {
+            case .Success(let data):
+                self.json = JSON(data)
+                
+                self.displayDetails()
+                
+            case .Failure(_, let error):
+                print("Request failed with error: \(error)")
+            }
+        }
+*/
+
     }
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         print("Got an image")
@@ -43,5 +66,18 @@ class PhotosViewController: UIViewController, UIImagePickerControllerDelegate, U
         dismissViewControllerAnimated(true, completion: {
             // Anything you want to happen when the user selects cancel
         })
+    }
+    @IBAction func testsound(sender: AnyObject) {
+            let path = NSBundle.mainBundle().pathForResource("answercellphone", ofType:"wav")
+            let fileURL = NSURL(fileURLWithPath: path!)
+        do {
+            try player = AVAudioPlayer(contentsOfURL: fileURL, fileTypeHint: nil)
+        } catch {
+            print("Error")
+        }
+
+            player.prepareToPlay()
+            player.delegate = self
+            player.play()
     }
 }
